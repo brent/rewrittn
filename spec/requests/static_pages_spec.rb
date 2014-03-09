@@ -2,28 +2,24 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
+  subject { page }
+
   describe "Home page" do
 
-    it "should have the content 'Rewrittn'" do
-      visit '/static_pages/home'
-      expect(page).to have_content('Rewrittn')
-    end
+    before { visit root_path }
 
-    it "should have the right title" do
-      visit '/static_pages/home'
-      expect(page).to have_title('Rewrittn')
-    end
+    it { should have_title('Rewrittn') }
   end
 
   describe "About page" do
-    it "should have the content 'About'" do
-      visit '/static_pages/about'
-      expect(page).to have_content('About')
-    end
+    before { visit about_path }
 
-    it "should have the right title" do
-      visit '/static_pages/about'
-      expect(page).to have_title('About')
-    end
+    it { should have_title('About') }
+  end
+
+  describe "Contact page" do
+    before { visit contact_path }
+
+    it { should have_title('Contact') }
   end
 end

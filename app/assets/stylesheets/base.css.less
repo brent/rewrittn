@@ -1,0 +1,54 @@
+// VARIABLES
+@container-width: 1024px;
+@default-text-color: #444;
+@default-font-size: 16px;
+@default-font-family: sans-serif;
+
+
+// FLOATS
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  display: block;
+}
+
+.clearfix:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 1px;
+  visibility: hidden;
+}
+
+
+// LAYOUT
+body {
+  color: @default-text-color;
+  font-family: @default-font-family;
+  font-size: @default-font-size;
+}
+
+a {
+  color: purple;
+  font-size: inherit;
+}
+
+.container-fixed {
+  width: @container-width;
+  margin: 0 auto;
+}
+
+.nav > li {
+  float: left;
+  margin-right: 10px;
+}
+
+.nav > li:last-child {
+  margin-right: 0px;
+}
