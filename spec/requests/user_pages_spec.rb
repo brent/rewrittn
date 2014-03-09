@@ -7,7 +7,9 @@ describe "UserPages" do
   describe "Sign up page" do
     before { visit signup_path }
 
-    it { should have_title('Sign up') }
+    it "should have the right title" do
+      expect(page).to have_title('Sign up')
+    end
   end
 
 end
