@@ -1,8 +1,11 @@
+* { box-sizing: border-box; }
+
 // VARIABLES
-@container-width: 1024px;
-@default-text-color: #444;
-@default-font-size: 16px;
-@default-font-family: sans-serif;
+@container-width: 80%;
+@base-text-color: #444;
+@base-font-size: 16px;
+@base-font-family: sans-serif;
+@link-color: purple;
 
 
 // FLOATS
@@ -29,26 +32,24 @@
 
 // LAYOUT
 body {
-  color: @default-text-color;
-  font-family: @default-font-family;
-  font-size: @default-font-size;
+  color: @base-text-color;
+  font-family: @base-font-family;
+  font-size: @base-font-size;
 }
 
 a {
-  color: purple;
+  color: @link-color;
   font-size: inherit;
 }
 
-.container-fixed {
-  width: @container-width;
+.container {
   margin: 0 auto;
+  width: @container-width;
 }
 
-.nav > li {
-  float: left;
-  margin-right: 10px;
-}
-
-.nav > li:last-child {
-  margin-right: 0px;
+.debug {
+  background: #eee;
+  margin: 20px auto 0;
+  padding: 20px;
+  width: @container-width;
 }
