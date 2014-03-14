@@ -1,0 +1,17 @@
+<% provide(:title, "Sign in") %>
+<h2>Sign in</h2>
+
+<div class="container">
+  <%= form_tag sessions_path do %>
+
+    <%= label_tag :email %>
+    <%= text_field_tag :email %>
+
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+
+    <%= submit_tag "Sign in" %>
+  <% end %>
+
+  <p>Don't have an account? <%= link_to "Create one", signup_path %></p>
+</div>
