@@ -3,6 +3,7 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.3'
 gem 'bcrypt-ruby', '3.1.2'
+gem 'faker', '~> 1.1.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails', '3.0.4'
@@ -10,6 +11,7 @@ gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '~> 1.2'
 gem 'less-rails', '~> 2.4.2'
 gem 'therubyracer', '~> 0.12.1'
+gem 'will_paginate', '~> 3.0.4'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
