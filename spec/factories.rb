@@ -9,4 +9,10 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :snippet do
+    content "s" * 51
+    source "user"
+    user
+  end
 end

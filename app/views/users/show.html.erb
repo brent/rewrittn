@@ -1,2 +1,17 @@
 <% provide(:title, @user.name) %>
-<p>Eventually, <%= @user.name %>, your profile will be here.</p>
+
+<div class="user-info">
+  <h2><%= @user.name %></h2>
+</div>
+
+<div class="main-col">
+  <% if @user.snippets.any? %>
+    <h3>Snippets (<%= @user.snippets.count %>)</h3>
+    <ol class="snippets">
+      <%= render @snippets %>
+    </ol>
+    <%= will_paginate @snippets %>
+  <% else %>
+    <p>You don't have any snippets yet. Why not <%= link_to "create one", new_snippet_path %>?</p>
+  <% end %>
+</div>

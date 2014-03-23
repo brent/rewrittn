@@ -4,6 +4,23 @@ describe "User pages" do
 
   subject { page }
 
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:s1) { FactoryGirl.create(:snippet, user: user, content: "1" * 51, source: "user") }
+    let!(:s2) { FactoryGirl.create(:snippet, user: user, content: "2" * 51, source: "user") }
+
+    before { visit user_path(user) }
+
+    it { should have_content(user.name) }
+    it { should have_title(user.name) }
+
+    describe "snippets" do
+      it { should have_content(s1.content) }
+      it { should have_content(s2.content) }
+      it { should have_content(user.snippets.count) }
+    end
+  end
+
   describe "index" do
     let(:user) { FactoryGirl.create(:user) }
     before(:each) do

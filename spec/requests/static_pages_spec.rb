@@ -16,6 +16,22 @@ describe "StaticPages" do
     it_behaves_like "a static page" do
       let(:page_title) { 'Rewrittn' }
     end
+
+    describe "for signed in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:snippet, user: user, content: "a" * 51)
+        FactoryGirl.create(:snippet, user: user, content: "b" * 51)
+        sign_in user
+        visit root_path
+      end
+
+      it "should show the user's feed" do
+        user.feed.each do |item|
+          expect(page).to have_selector("li##{item.id}", text: item.content)
+        end
+      end
+    end
   end
 
   describe "About page" do

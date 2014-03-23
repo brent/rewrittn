@@ -10,7 +10,12 @@ label {
   display: block;
 }
 
-input {
+label {
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
   border-radius: 3px;
   border: 1px solid #ddd;
   margin-bottom: 20px;
@@ -18,8 +23,8 @@ input {
   width: 100%;
 }
 
-label {
-  margin-bottom: 5px;
+textarea {
+  min-height: 100px;
 }
 
 .btn {
@@ -50,4 +55,40 @@ label {
 
 .field_with_errors input {
   border-color: red;
+}
+
+
+// Snippets
+.snippets li {
+  margin: 20px 0;
+}
+
+.snippets p {
+  font-size: 14px;
+}
+
+.snippets p:first-child {
+  font-size: 24px;
+}
+
+.snippets p:first-child:before {
+  content: "\201C";
+}
+
+.snippets p:first-child:after {
+  content: "\201D";
+}
+
+.snippets small {
+  color: #bbb;
+}
+
+
+// Users
+.users li {
+  margin-bottom: 20px;
+}
+
+.users li:first-child {
+  margin-top: 20px;
 }

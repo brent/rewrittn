@@ -15,6 +15,8 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:snippets) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -108,5 +110,39 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "snippet associations" do
+
+    before { @user.save }
+    let!(:older_snippet) do
+      FactoryGirl.create(:snippet, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_snippet) do
+      FactoryGirl.create(:snippet, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right snippets in the right order" do
+      expect(@user.snippets.to_a).to eq [newer_snippet, older_snippet]
+    end
+
+    it "should destroy associated snippets" do
+      snippets = @user.snippets.to_a
+      @user.destroy
+      expect(snippets).not_to be_empty
+      snippets.each do |snippet|
+        expect(Snippet.where(id: snippet.id)).to be_empty
+      end
+    end
+
+    describe "status" do
+      let(:unfollowed_snippet) do
+        FactoryGirl.create(:snippet, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(older_snippet) }
+      its(:feed) { should include(newer_snippet) }
+      its(:feed) { should_not include(unfollowed_snippet) }
+    end
   end
 end

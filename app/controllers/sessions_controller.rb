@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       sign_in user
-      redirect_back_or user
+      redirect_back_or root_path
     else
       flash.now[:error] = "Please check your credentials and try again."
       render 'new'
