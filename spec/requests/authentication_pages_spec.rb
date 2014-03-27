@@ -16,7 +16,7 @@ describe "Authentication" do
       it { should have_title('Sign in') }
       it { should have_selector('.alert.alert-error') }
 
-      describe "after visiting the Home page" do
+      describe "after visiting another page" do
         before { click_link "Rewrittn" }
         it { should_not have_selector('.alert.alert-error') }
       end
@@ -75,6 +75,28 @@ describe "Authentication" do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title("Sign in") }
+        end
+
+        describe "visiting the following page" do
+          before { visit following_user_path(user) }
+          it { should have_title('Sign in') }
+        end
+
+        describe "visiting followers page" do
+          before { visit followers_user_path(user) }
+          it { should have_title('Sign in') }
+        end
+      end
+
+      describe "in the Relationships controller" do
+        describe "submitting to the create action" do
+          before { post relationships_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the delete action" do
+          before { delete relationship_path(1) }
+          specify { expect(response).to redirect_to(signin_path) }
         end
       end
     end

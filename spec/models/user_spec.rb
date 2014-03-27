@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  
+
   before { @user = User.new(name: "Brent Meyer", email: "brent.e.meyer@gmail.com",
                             password: "password", password_confirmation: "password") }
 
@@ -17,6 +17,13 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:snippets) }
   it { should respond_to(:feed) }
+  it { should respond_to(:relationships) }
+  it { should respond_to(:followed_users) }
+  it { should respond_to(:reverse_relationships) }
+  it { should respond_to(:followers) }
+  it { should respond_to(:follow!) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:unfollow!) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -139,10 +146,44 @@ describe User do
       let(:unfollowed_snippet) do
         FactoryGirl.create(:snippet, user: FactoryGirl.create(:user))
       end
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.snippets.create!(content: "a" * 51, source: @user) }
+      end
 
       its(:feed) { should include(older_snippet) }
       its(:feed) { should include(newer_snippet) }
       its(:feed) { should_not include(unfollowed_snippet) }
+      its(:feed) do
+        followed_user.snippets.each do |snippet|
+          should include(snippet)
+        end
+      end
+    end
+  end
+
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "and unfollowing" do
+      before { @user.unfollow!(other_user) }
+
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+    end
+
+    describe "followed user" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
     end
   end
 end

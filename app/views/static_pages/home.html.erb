@@ -1,4 +1,9 @@
 <h2>Welcome to Rewrittn</h2>
+<% if signed_in? %>
+<%= render "shared/stats" %>
 <div class="feed">
   <%= render "shared/feed" %>
 </div>
+<% else %>
+<p>Not a member? <%= link_to "Sign up", signup_path %></p>
+<% end %>
