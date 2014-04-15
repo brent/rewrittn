@@ -16,6 +16,10 @@ describe "Snippet pages" do
     it "should display the snippet" do
       expect(page).to have_content(snippet.content)
     end
+
+    it "should have a rewrite button" do
+      expect(page).to have_link("rewrite", href: new_rewrite_path(snippet: snippet.id))
+    end
   end
 
   describe "snippet creation" do

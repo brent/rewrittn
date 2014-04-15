@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
                                    class_name: "Relationship",
                                    dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  has_many :rewrites, dependent: :destroy
 
   before_save { self.email.downcase! }
   before_create :create_remember_token
@@ -29,8 +30,12 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
-  def feed
+  def snippets_feed
     Snippet.from_users_followed_by(self)
+  end
+
+  def rewrites_feed
+    Rewrite.from_users_followed_by(self)
   end
 
   def following?(other_user)

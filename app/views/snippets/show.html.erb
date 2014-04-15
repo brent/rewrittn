@@ -6,3 +6,7 @@
   <p><%= @snippet.content %></p>
   <p>via <%= @snippet.source %> <small><%= time_ago_in_words(@snippet.created_at) %> ago</small></p>
 </div>
+
+<div>
+  <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id) %>
+</div>

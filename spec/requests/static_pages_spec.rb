@@ -20,17 +20,25 @@ describe "StaticPages" do
     describe "for signed in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        FactoryGirl.create(:snippet, user: user, content: "a" * 51)
-        FactoryGirl.create(:snippet, user: user, content: "b" * 51)
+        s1 = FactoryGirl.create(:snippet, user: user, content: "a" * 51)
+        s2 = FactoryGirl.create(:snippet, user: user, content: "b" * 51)
+        FactoryGirl.create(:rewrite, user: user, snippet: s1)
+        FactoryGirl.create(:rewrite, user: user, snippet: s2)
         sign_in user
         visit root_path
       end
 
-      it "should show the user's feed" do
-        user.feed.each do |item|
+      it "should show the user's snippets feed" do
+        user.snippets_feed.each do |item|
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      #it "should show the user's rewrites feed" do
+        #user.rewrites_feed.each do |item|
+          #expect(page).to have_selector("li##{item.id}", text: item.title)
+        #end
+      #end
 
       describe "follower/following counts" do
         let(:other_user) { FactoryGirl.create(:user) }

@@ -15,7 +15,7 @@ class SnippetsController < ApplicationController
     if @snippet.save
       redirect_to @snippet
     else
-      flash[:error] = "Your snippet couldn't be created. Try again later?"
+      flash[:error] = "Your snippet couldn't be created. Try again?"
       render 'new'
     end
   end

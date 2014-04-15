@@ -1,0 +1,13 @@
+<% if !@rewrite.nil? %>
+  <h2><%= @rewrite.title %></h2>
+
+  <% unless @rewrite.content_before_snippet.nil? %>
+    <p class="rewrite rewrite-before"><%= @rewrite.content_before_snippet %></p>
+  <% end %>
+
+  <p class="snippet"><%= @rewrite.snippet.content %></p>
+
+  <% unless @rewrite.content_after_snippet.nil? %>
+    <p class="rewrite rewrite-after"><%= @rewrite.content_after_snippet %></p>
+  <% end %>
+<% end %>

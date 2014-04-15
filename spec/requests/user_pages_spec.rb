@@ -63,7 +63,7 @@ describe "User pages" do
           end.to change(other_user.followers, :count).by(-1)
         end
 
-        describe "toggline the button" do
+        describe "toggling the button" do
           before { click_button "Unfollow" }
           it { should have_xpath("//input[@value='Follow']") }
         end

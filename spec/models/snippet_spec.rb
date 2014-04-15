@@ -13,6 +13,7 @@ describe Snippet do
   it { should respond_to(:source) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:rewrites) }
   its(:user) { should eq user }
 
   describe "when user_id is not present" do

@@ -16,7 +16,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:snippets) }
-  it { should respond_to(:feed) }
+  it { should respond_to(:snippets_feed) }
   it { should respond_to(:relationships) }
   it { should respond_to(:followed_users) }
   it { should respond_to(:reverse_relationships) }
@@ -24,6 +24,8 @@ describe User do
   it { should respond_to(:follow!) }
   it { should respond_to(:following?) }
   it { should respond_to(:unfollow!) }
+  it { should respond_to(:rewrites) }
+  it { should respond_to(:rewrites_feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -142,7 +144,7 @@ describe User do
       end
     end
 
-    describe "status" do
+    describe "snippets feed" do
       let(:unfollowed_snippet) do
         FactoryGirl.create(:snippet, user: FactoryGirl.create(:user))
       end
@@ -153,10 +155,10 @@ describe User do
         3.times { followed_user.snippets.create!(content: "a" * 51, source: @user) }
       end
 
-      its(:feed) { should include(older_snippet) }
-      its(:feed) { should include(newer_snippet) }
-      its(:feed) { should_not include(unfollowed_snippet) }
-      its(:feed) do
+      its(:snippets_feed) { should include(older_snippet) }
+      its(:snippets_feed) { should include(newer_snippet) }
+      its(:snippets_feed) { should_not include(unfollowed_snippet) }
+      its(:snippets_feed) do
         followed_user.snippets.each do |snippet|
           should include(snippet)
         end
@@ -184,6 +186,55 @@ describe User do
     describe "followed user" do
       subject { other_user }
       its(:followers) { should include(@user) }
+    end
+  end
+
+  describe "rewrite associations" do
+
+    before { @user.save }
+    let(:snippet) { FactoryGirl.create(:snippet, user: @user) }
+    let!(:first_rewrite) do
+      FactoryGirl.create(:rewrite, user: @user, snippet: snippet, created_at: 1.day.ago)
+    end
+    let!(:second_rewrite) do
+      FactoryGirl.create(:rewrite, user: @user, snippet: snippet, created_at: 1.hour.ago)
+    end
+
+    it "should have the right rewrites in the right order" do
+      expect(@user.rewrites.to_a).to eq [second_rewrite, first_rewrite]
+    end
+
+    it "should destroy associated rewrites" do
+      rewrites = @user.rewrites.to_a
+      @user.destroy
+      expect(rewrites).not_to be_empty
+      rewrites.each do |rewrite|
+        expect(Rewrite.where(id: rewrite.id)).to be_empty
+      end
+    end
+
+    describe "rewrites feed" do
+      let(:unfollowed_user) do
+        FactoryGirl.create(:user)
+      end
+      let(:unfollowed_rewrite) do
+        FactoryGirl.create(:rewrite, user: unfollowed_user, snippet: FactoryGirl.create(:snippet, user: unfollowed_user))
+      end
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.rewrites.create!(title: "I Really Hope This Works", content_before_snippet: "Content" * 40, snippet: FactoryGirl.create(:snippet, user: followed_user)) }
+      end
+
+      its(:rewrites_feed) { should include(first_rewrite) }
+      its(:rewrites_feed) { should include(second_rewrite) }
+      its(:rewrites_feed) { should_not include(unfollowed_rewrite) }
+      its(:rewrites_feed) do
+        followed_user.rewrites.each do |rewrite|
+          should include(rewrite)
+        end
+      end
     end
   end
 end

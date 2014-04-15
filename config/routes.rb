@@ -7,6 +7,7 @@ Rewrittn::Application.routes.draw do
   resources :sessions,      only: [:new, :create, :destroy]
   resources :snippets,      only: [:show, :new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :rewrites
 
   root "static_pages#home"
 
