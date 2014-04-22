@@ -1,0 +1,11 @@
+<% provide(:title, "All rewrites") %>
+
+<%= will_paginate %>
+
+<ul class="rewrites">
+  <% @rewrites.each do |rewrite| %>
+    <li class="rewrite"><%= link_to rewrite.snippet.content, rewrite %></li>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

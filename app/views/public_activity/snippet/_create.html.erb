@@ -1,0 +1,7 @@
+<li id=<%= activity.trackable_id %>>
+
+  <p><%= link_to User.find(activity.owner_id).name, User.find(activity.owner_id) %> added a snippet: <%= link_to activity.parameters[:snippet_content], snippet_path(activity.trackable_id), class: "snippet" %></p>
+
+  <p><small><%= time_ago_in_words(activity.created_at) %> ago</small></p>
+
+</li>

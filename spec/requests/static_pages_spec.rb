@@ -19,26 +19,27 @@ describe "StaticPages" do
 
     describe "for signed in users" do
       let(:user) { FactoryGirl.create(:user) }
+      let(:other_user) { FactoryGirl.create(:user) }
+
       before do
         s1 = FactoryGirl.create(:snippet, user: user, content: "a" * 51)
+        s1.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
+
         s2 = FactoryGirl.create(:snippet, user: user, content: "b" * 51)
-        FactoryGirl.create(:rewrite, user: user, snippet: s1)
-        FactoryGirl.create(:rewrite, user: user, snippet: s2)
+        s2.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
+
+        r1 = FactoryGirl.create(:rewrite, user: other_user, snippet: s1)
+        r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title }
+
         sign_in user
         visit root_path
       end
 
-      it "should show the user's snippets feed" do
-        user.snippets_feed.each do |item|
-          expect(page).to have_selector("li##{item.id}", text: item.content)
+      it "should show the user's feed" do
+        PublicActivity::Activity.all.each do |item|
+          expect(page).to have_selector("li##{item.trackable_id}", text: item.parameters[:snippet_content])
         end
       end
-
-      #it "should show the user's rewrites feed" do
-        #user.rewrites_feed.each do |item|
-          #expect(page).to have_selector("li##{item.id}", text: item.title)
-        #end
-      #end
 
       describe "follower/following counts" do
         let(:other_user) { FactoryGirl.create(:user) }

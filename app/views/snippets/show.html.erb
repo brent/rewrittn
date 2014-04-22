@@ -8,5 +8,6 @@
 </div>
 
 <div>
+  <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
   <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id) %>
 </div>

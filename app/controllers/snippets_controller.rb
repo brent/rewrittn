@@ -13,6 +13,7 @@ class SnippetsController < ApplicationController
   def create
     @snippet = current_user.snippets.build(snippet_params)
     if @snippet.save
+      @snippet.create_activity :create, owner: current_user, parameters: { snippet_content: @snippet.content }
       redirect_to @snippet
     else
       flash[:error] = "Your snippet couldn't be created. Try again?"

@@ -46,10 +46,10 @@ describe "Snippet pages" do
   end
 
   describe "snippet destruction" do
-    before { FactoryGirl.create(:snippet, user: user) }
+    let(:snippet) { FactoryGirl.create(:snippet, user: user) }
 
     describe "as correct user" do
-      before { visit root_path }
+      before { visit snippet_path(snippet) }
 
       it "should delete a snippet" do
         expect { click_link "delete" }.to change(Snippet, :count).by(-1)

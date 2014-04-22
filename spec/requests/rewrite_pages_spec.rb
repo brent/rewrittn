@@ -8,6 +8,31 @@ describe "Rewrite pages" do
   let(:snippet) { FactoryGirl.create(:snippet, user: user) }
   before { sign_in user }
 
+  describe "index" do
+    before do
+      visit rewrites_path
+    end
+
+    describe "pagination" do
+      before(:all) do
+        u = FactoryGirl.create(:user)
+        31.times { FactoryGirl.create(:rewrite, user: u, snippet: FactoryGirl.create(:snippet, user: u)) }
+      end
+      after(:all) do
+        User.delete_all
+        Rewrite.delete_all
+      end
+
+      it { should have_selector('.pagination') }
+
+      it "should list each user" do
+        Rewrite.paginate(page: 1).each do |rewrite|
+          expect(page).to have_selector('li', text: rewrite.snippet.content)
+        end
+      end
+    end
+  end
+
   describe "show" do
     let(:rewrite) { FactoryGirl.create(:rewrite, user: user, snippet: snippet) }
     before do
