@@ -37,7 +37,7 @@ describe "StaticPages" do
 
       it "should show the user's feed" do
         PublicActivity::Activity.all.each do |item|
-          expect(page).to have_selector("li##{item.trackable_id}", text: item.parameters[:snippet_content])
+          expect(page).to have_selector("li##{item.trackable_id}")
         end
       end
 

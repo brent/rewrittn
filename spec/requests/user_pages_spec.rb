@@ -6,18 +6,28 @@ describe "User pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    let!(:s1) { FactoryGirl.create(:snippet, user: user, content: "1" * 51, source: "user") }
-    let!(:s2) { FactoryGirl.create(:snippet, user: user, content: "2" * 51, source: "user") }
+    let(:other_user) { FactoryGirl.create(:user) }
 
-    before { visit user_path(user) }
+    before do
+      s1 = FactoryGirl.create(:snippet, user: user, content: "a" * 51)
+      s1.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
+
+      s2 = FactoryGirl.create(:snippet, user: user, content: "b" * 51)
+      s2.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
+
+      r1 = FactoryGirl.create(:rewrite, user: other_user, snippet: s1)
+      r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title }
+
+      visit user_path(user)
+    end
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
 
-    describe "snippets" do
-      it { should have_content(s1.content) }
-      it { should have_content(s2.content) }
-      it { should have_content(user.snippets.count) }
+    it "should show the user's activity" do
+      PublicActivity::Activity.all.each do |item|
+        expect(page).to have_selector("li##{item.trackable_id}")
+      end
     end
 
     describe "follow/unfollow buttons" do

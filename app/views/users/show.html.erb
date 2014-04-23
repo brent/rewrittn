@@ -7,13 +7,24 @@
 </div>
 
 <div class="main-col">
-  <% if @user.snippets.any? %>
-    <h3>Snippets (<%= @user.snippets.count %>)</h3>
-    <ol class="snippets">
-      <%= render @snippets %>
+
+  <% if !@feed_items.empty? %>
+    <h3>Activity</h3>
+
+    <%= will_paginate @feed_items %>
+
+    <ol class="feed">
+      <%= render_activity @feed_items %>
     </ol>
-    <%= will_paginate @snippets %>
+
+    <%= will_paginate @feed_items %>
+
   <% else %>
-    <p>You don't have any snippets yet. Why not <%= link_to "create one", new_snippet_path %>?</p>
+    <% if @user == current_user %>
+      <p>You don't have any activity yet. Why not <%= link_to "enjoy a rewrite", rewrite_path(rand(Rewrite.count)) %>, <%= link_to "add a snippet", new_snippet_path %>, or <%= link_to "rewrite something of your own", snippets_path %>?</p>
+    <% else %>
+      <p><%= @user.name %> doesn't have any activity yet. Bummer.</p>
+    <% end %>
   <% end %>
+
 </div>

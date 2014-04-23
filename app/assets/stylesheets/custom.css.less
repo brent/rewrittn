@@ -59,36 +59,46 @@ textarea {
 
 
 // Snippets
-.snippets li {
-  margin: 20px 0;
-}
-
-.snippets p {
-  font-size: 14px;
-}
-
-.snippets p:first-child {
-  font-size: 24px;
-}
-
-.snippets p:first-child:before {
-  content: "\201C";
-}
-
-.snippets p:first-child:after {
-  content: "\201D";
-}
-
-.snippets small {
-  color: #bbb;
-}
 
 
 // Users
-.users li {
-  margin-bottom: 20px;
+
+// Feed
+.feed {
+  width: 60%;
+  margin: 0 auto;
 }
 
-.users li:first-child {
-  margin-top: 20px;
+.feed a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.feed li {
+  margin: 20px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.feed-item-timestamp {
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+.feed .user {
+  font-weight: bold;
+}
+
+.feed .rewrite-title {
+  font-size: 24px;
+}
+
+.feed .snippet {
+  display: block;
+  margin-top: 10px;
 }
