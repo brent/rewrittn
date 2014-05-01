@@ -25,8 +25,14 @@ describe "User pages" do
     it { should have_title(user.name) }
 
     it "should show the user's activity" do
-      PublicActivity::Activity.all.each do |item|
+      PublicActivity::Activity.where(owner_id: user.id).each do |item|
         expect(page).to have_selector("li##{item.trackable_id}")
+      end
+    end
+
+    it "should not show activity from other users" do
+      PublicActivity::Activity.where(owner_id: user.id).each do |item|
+        expect(page).to_not have_selector("li##{other_user.rewrites.last.id}")
       end
     end
 
