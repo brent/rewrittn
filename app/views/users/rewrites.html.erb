@@ -1,0 +1,13 @@
+<%= will_paginate(@rewrites) %>
+
+<ul>
+  <% @rewrites.each do |rewrite| %>
+    <li class="rewrite" stlye="margin-bottom: 20px;">
+      <p><%= rewrite.content_before_snippet %></p>
+      <p><%= rewrite.snippet.content %></p>
+      <p><%= rewrite.content_after_snippet %></p>
+    </li>
+  <% end %>
+</ul>
+
+<%= will_paginate(@rewrites) %>

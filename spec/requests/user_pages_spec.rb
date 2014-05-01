@@ -254,4 +254,41 @@ describe "User pages" do
       it { should have_link(user.name, href: user_path(user)) }
     end
   end
+
+  describe "snippets" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    before do
+      31.times { FactoryGirl.create(:snippet, user: user) }
+      visit snippets_user_path(user)
+    end
+    after { Snippet.delete_all }
+
+    it { should have_selector('.pagination') }
+
+    it "should list each snippet" do
+      Snippet.paginate(page: 1).each do |snippet|
+        expect(page).to have_selector('li', text: snippet.content)
+      end
+    end
+  end
+
+  describe "rewrites" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:snippet) { FactoryGirl.create(:snippet, user: user) }
+
+    before do
+      31.times { FactoryGirl.create(:rewrite, user: user, snippet: snippet) }
+      visit rewrites_user_path(user)
+    end
+    after { Rewrite.delete_all }
+
+    it { should have_selector('.pagination') }
+
+    it "should list each rewrite" do
+      Rewrite.paginate(page: 1).each do |rewrite|
+        expect(page).to have_selector('li', text: rewrite.content_before_snippet || rewrite.content_after_snippet)
+      end
+    end
+  end
 end

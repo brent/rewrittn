@@ -1,0 +1,9 @@
+<%= will_paginate(@snippets) %>
+
+<ul>
+  <% @snippets.each do |snippet| %>
+    <li class="snippet" stlye="margin-bottom: 20px;"><%= snippet.content %></li>
+  <% end %>
+</ul>
+
+<%= will_paginate(@snippets) %>

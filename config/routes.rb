@@ -1,7 +1,7 @@
 Rewrittn::Application.routes.draw do
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :snippets, :rewrites
     end
   end
   resources :sessions,      only: [:new, :create, :destroy]

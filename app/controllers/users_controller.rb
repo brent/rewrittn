@@ -59,6 +59,16 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def snippets
+    @user = User.find(params[:id])
+    @snippets = @user.snippets.paginate(page: params[:page])
+  end
+
+  def rewrites
+    @user = User.find(params[:id])
+    @rewrites = @user.rewrites.paginate(page: params[:page])
+  end
+
   private
 
     def user_params
