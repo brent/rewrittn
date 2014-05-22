@@ -1,11 +1,18 @@
 * { box-sizing: border-box; }
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Lora:700italic|Bitter:400,700,400italic);
 
 // VARIABLES
-@container-width: 80%;
-@base-text-color: #444;
+@container-width: 44%;
+
+@light-gray: #aaa;
+@dark-gray: #444;
+@medium-gray: #777;
+@link-color: #7f5891;
+
 @base-font-size: 16px;
-@base-font-family: sans-serif;
-@link-color: purple;
+
+@primary-font-family: "Source Sans Pro", sans-serif;
+@secondary-font-family: Bitter, serif;
 
 
 // FLOATS
@@ -30,10 +37,10 @@
 }
 
 
-// LAYOUT
+// Global
 body {
-  color: @base-text-color;
-  font-family: @base-font-family;
+  color: @medium-gray;
+  font-family: @primary-font-family;
   font-size: @base-font-size;
 }
 
@@ -52,4 +59,98 @@ a {
   margin: 20px auto 0;
   padding: 20px;
   width: @container-width;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 5px;
+  border-radius: 3px;
+  background: @light-gray;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: @link-color;
+}
+
+// FORMS
+
+form {
+  margin: 0 auto;
+}
+
+input,
+label {
+  display: block;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 100%;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+.errors {
+  border: 1px solid red;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.errors ul {
+  color: red;
+  margin-top: 7px;
+}
+
+.errors li {
+  margin: 0 0 3px 30px;
+  list-style: disc;
+}
+
+.field_with_errors input {
+  border-color: red;
+}
+
+
+.username {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.timestamp {
+  color: #aaa;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.snippet {
+  font: 30px @secondary-font-family;
+  font-style: italic;
+  line-height: 1.3em;
+  margin: 30px 0;
+
+  a {
+    text-decoration: none;
+  }
+
+  .snippet-meta {
+    display: block;
+    font-style: italic;
+    font-size: 14px;
+    margin: -5px 0 0 20px;
+  }
 }

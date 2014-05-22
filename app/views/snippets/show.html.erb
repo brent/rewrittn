@@ -1,13 +1,14 @@
-<div class="user-info">
-  <h2><%= @snippet.user.name %>
-</div>
+<div class="snippet-single">
+  <small class="timestamp"><%= time_ago_in_words(@snippet.created_at) %> ago</small>
+  <p><%= link_to @snippet.user.name, @snippet.user, class: "username" %> added</p>
 
-<div class="snippet">
-  <p><%= @snippet.content %></p>
-  <p>via <%= @snippet.source %> <small><%= time_ago_in_words(@snippet.created_at) %> ago</small></p>
-</div>
+  <div class="snippet">
+    <p><%= @snippet.content %></p>
+    <p class="snippet-meta">via <%= @snippet.source %></p>
+  </div>
 
-<div>
-  <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
-  <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id) %>
+  <div>
+    <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id), class: "btn btn-primary" %>
+    <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
 </div>

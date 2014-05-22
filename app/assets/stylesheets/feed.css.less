@@ -1,0 +1,73 @@
+@import url('base.css.less');
+
+.feed-item {
+  color: @medium-gray;
+  margin-bottom: 60px;
+}
+
+.feed-rewrite-create {
+
+  .rewrite-title {
+    border: none;
+    color: @dark-gray;
+    font: 32px/40px @secondary-font-family;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 0;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: @link-color;
+      }
+    }
+  }
+
+  .snippet-container {
+    margin-left: 20px;
+
+    .snippet {
+      color: @medium-gray;
+      font-family: @primary-font-family;
+      font-size: @base-font-size;
+      font-style: normal;
+      margin: 0;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .timestamp, .seeded-by {
+    color: #aaa;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+}
+
+.feed-snippet-create {
+
+  .snippet {
+    color: @dark-gray;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    padding: 10px 20px;
+    margin: 0;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: @link-color;
+      }
+    }
+  }
+}

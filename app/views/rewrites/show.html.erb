@@ -1,13 +1,20 @@
 <% if !@rewrite.nil? %>
-  <h2><%= @rewrite.title %></h2>
+  <div class="rewrite-single">
+    <small class="timestamp"><%= time_ago_in_words(@rewrite.created_at) %> ago</small>
+    <h3 class="user-meta"><%= link_to @rewrite.user.name, @rewrite.user %> <%= rewrite_action_word %></h3>
+    <h2 class="rewrite-title"><%= @rewrite.title %></h2>
 
-  <% unless @rewrite.content_before_snippet.nil? %>
-    <p class="rewrite rewrite-before"><%= @rewrite.content_before_snippet %></p>
-  <% end %>
+    <% unless @rewrite.content_before_snippet.nil? %>
+      <p class="rewrite rewrite-before"><%= @rewrite.content_before_snippet %></p>
+    <% end %>
 
-  <p class="snippet"><%= @rewrite.snippet.content %></p>
+    <p class="snippet">
+      <%= link_to @rewrite.snippet.content, @rewrite.snippet %>
+      <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
+    </p>
 
-  <% unless @rewrite.content_after_snippet.nil? %>
-    <p class="rewrite rewrite-after"><%= @rewrite.content_after_snippet %></p>
-  <% end %>
+    <% unless @rewrite.content_after_snippet.nil? %>
+      <p class="rewrite rewrite-after"><%= @rewrite.content_after_snippet %></p>
+    <% end %>
+  </div>
 <% end %>
