@@ -3,7 +3,7 @@
   <p><%= link_to @snippet.user.name, @snippet.user, class: "username" %> added</p>
 
   <div class="snippet">
-    <p><%= @snippet.content %></p>
+    <%= simple_format @snippet.content %>
     <p class="snippet-meta">via <%= @snippet.source %></p>
   </div>
 

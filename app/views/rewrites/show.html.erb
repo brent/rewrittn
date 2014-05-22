@@ -5,16 +5,22 @@
     <h2 class="rewrite-title"><%= @rewrite.title %></h2>
 
     <% unless @rewrite.content_before_snippet.nil? %>
-      <p class="rewrite rewrite-before"><%= @rewrite.content_before_snippet %></p>
+      <div class="rewrite rewrite-before">
+        <%= simple_format @rewrite.content_before_snippet %>
+      </div>
     <% end %>
 
-    <p class="snippet">
-      <%= link_to @rewrite.snippet.content, @rewrite.snippet %>
+    <div class="snippet">
+      <a href="<%= snippet_path(@rewrite.snippet) %>">
+        <%= simple_format @rewrite.snippet.content %>
+      </a>
       <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
-    </p>
+    </div>
 
     <% unless @rewrite.content_after_snippet.nil? %>
-      <p class="rewrite rewrite-after"><%= @rewrite.content_after_snippet %></p>
+      <div class="rewrite rewrite-after">
+        <%= simple_format @rewrite.content_after_snippet %>
+      </div>
     <% end %>
   </div>
 <% end %>

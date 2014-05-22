@@ -7,7 +7,11 @@
 
   <div class="snippet-container">
     <p class="seeded-by">seeded by:</p>
-    <p class="snippet"><%= link_to activity.parameters[:snippet_content], snippet_path(activity.trackable_id) %></p>
+    <div class="snippet">
+      <a href="<%= snippet_path(activity.trackable_id) %>">
+        <%= simple_format activity.parameters[:snippet_content] %>
+      </a>
+    </div>
   </div>
 
 </li>

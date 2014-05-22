@@ -2,6 +2,10 @@
 
   <small class="timestamp"><%= time_ago_in_words(activity.created_at) %> ago</small>
   <p><%= link_to User.find(activity.owner_id).name, User.find(activity.owner_id), class: "username" %> added a snippet</p>
-  <p class="snippet"><%= link_to activity.parameters[:snippet_content], snippet_path(activity.trackable_id) %></p>
+  <div class="snippet">
+    <a href="<%= snippet_path(activity.trackable_id) %>">
+      <%= simple_format activity.parameters[:snippet_content] %>
+    </a>
+  </div>
 
 </li>
