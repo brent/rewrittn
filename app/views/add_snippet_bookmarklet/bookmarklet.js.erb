@@ -1,0 +1,47 @@
+function getSelectionHtml() {
+    // via: http://stackoverflow.com/questions/4652734/return-html-from-a-user-selected-text/4652824#4652824
+    var html = "";
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            }
+            html = container.innerHTML;
+        }
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            html = document.selection.createRange().htmlText;
+        }
+    }
+    return html;
+}
+
+// alert(getSelectionHtml());
+
+if(typeof jQuery == 'undefined') {
+  script = document.createElement('script');
+  script.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
+  script.onload = addSnippet();
+  document.body.appendChild(script);
+}
+else {
+  addSnippet();
+}
+
+function addSnippet() {
+  var content = getSelectionHtml(),
+      source = location.href;
+
+  $.ajax({
+    url: "http://localhost:3000/add_snippet",
+    data: { content: content, source: source }
+  })
+  .done(function() {
+    alert("success");
+  })
+  .fail(function() {
+    alert("fail");
+  });
+}

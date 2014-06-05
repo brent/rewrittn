@@ -8,8 +8,11 @@ class AddSnippetBookmarkletController < ApplicationController
     if @snippet.save
       render json: { status: "success" }
     else
-      render json: @snippet
+      render json: { status: "error" }
     end
+  end
+
+  def bookmarklet
   end
 
   private
