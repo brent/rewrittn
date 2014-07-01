@@ -1,0 +1,42 @@
+javascript: void((function() {
+    var html = "<form id='add_snippet_form' action='<%= add_snippet_url %>' method='POST' style='display: none'>" +
+        "<input id='snippet_url' name='snippet[source]'></input>" +
+        "<input id='snippet_content' name='snippet[content]'></input>" +
+        "</form>";
+
+    var parent = document.createElement("div");
+    parent.innerHTML = html;
+    document.body.appendChild(parent);
+
+    var location = document.location.href;
+
+    var urlInput = document.getElementById('snippet_url');
+    urlInput.setAttribute('value', location);
+
+    var snippetInput = document.getElementById('snippet_content');
+    var selectedText = getSelectionHtml();
+    snippetInput.setAttribute('value', selectedText);
+
+    var form = document.getElementById('add_snippet_form');
+    form.submit();
+
+    function getSelectionHtml() {
+        var html = "";
+        if (typeof window.getSelection != "undefined") {
+            var sel = window.getSelection();
+            if (sel.rangeCount) {
+                var container = document.createElement("div");
+                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (typeof document.selection != "undefined") {
+            if (document.selection.type == "Text") {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        return(html);
+    }
+
+})())

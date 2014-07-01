@@ -11,6 +11,8 @@ Rewrittn::Application.routes.draw do
 
   root "static_pages#home"
 
+  post 'add_snippet', to: 'add_snippet#create'
+  match 'bookmarklet', to: 'add_snippet#index', via: 'get'
   match "/signup",  to: "users#new",            via: 'get'
   match "/signin",  to: "sessions#new",         via: 'get'
   match "/signout", to: "sessions#destroy",     via: 'delete'
