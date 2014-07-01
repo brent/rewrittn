@@ -1,11 +1,17 @@
 javascript: void((function() {
-    var html = "<form id='add_snippet_form' action='<%= add_snippet_url %>' method='POST' style='display: none'>" +
+    var formHtml = "<form id='add_snippet_form' action='<%= add_snippet_url %>' method='POST' style='display: none' target='add_snippet_frame'>" +
         "<input id='snippet_url' name='snippet[source]'></input>" +
         "<input id='snippet_content' name='snippet[content]'></input>" +
         "</form>";
 
+    var iframe = document.createElement("iframe");
+    iframe.setAttribute('name', 'add_snippet_frame');
+    iframe.setAttribute('id', 'add_snippet_frame');
+    iframe.setAttribute('style', 'border: 0; width: 25px; height: 25px; position: absolute; top: 0; left: 0;');
+    document.body.appendChild(iframe);
+
     var parent = document.createElement("div");
-    parent.innerHTML = html;
+    parent.innerHTML = formHtml;
     document.body.appendChild(parent);
 
     var location = document.location.href;
