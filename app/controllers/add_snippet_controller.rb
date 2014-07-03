@@ -5,11 +5,13 @@ class AddSnippetController < ApplicationController
   end
 
   def create
-    current_user = User.where(remember_token: User.hash(cookies.permanent[:remember_token])).take
-    snippet = current_user.snippets.build(snippet_params)
-    if snippet.save
+    if current_user = User.where(remember_token: User.hash(cookies.permanent[:remember_token])).take
+      snippet = current_user.snippets.build(snippet_params)
+
+      snippet.save
       snippet.create_activity :create, owner: current_user, parameters: { snippet_content: snippet.content }
     end
+    render nothing: true
   end
 
   private
