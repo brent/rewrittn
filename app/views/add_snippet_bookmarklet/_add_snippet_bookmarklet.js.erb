@@ -1,0 +1,44 @@
+javascript: void((function() {
+
+  function add_snippet() {
+    var script = document.createElement("script");
+    script.id = "add-snippet-loadJSONP";
+    script.type = "text/javascript";
+    script.src = "<%= add_snippet_url %>?callback=add_snippet_complete&snippet[source]=" + encodeURI(window.location.href) + "&snippet[content]="+getSelectionHtml();
+
+    document.body.appendChild(script);
+  }
+
+  add_snippet();
+})());
+
+function getSelectionHtml() {
+    var html = "";
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            }
+            html = container.innerHTML;
+        }
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            html = document.selection.createRange().htmlText;
+        }
+    }
+    return(html);
+}
+
+function add_snippet_complete(data) {
+  if(data.status == "success") {
+    alert("successfully snipped\n"+getSelectionHtml());
+  }
+  else {
+    alert("ruh roh");
+  }
+
+  var s = document.getElementById("add-snippet-loadJSONP");
+  s.parentNode.removeChild(s);
+}
