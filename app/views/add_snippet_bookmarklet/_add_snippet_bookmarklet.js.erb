@@ -36,7 +36,7 @@ function add_snippet_complete(data) {
     alert("successfully snipped\n"+getSelectionHtml());
   }
   else {
-    alert("ruh roh");
+    alert(data.error);
   }
 
   var s = document.getElementById("add-snippet-loadJSONP");
