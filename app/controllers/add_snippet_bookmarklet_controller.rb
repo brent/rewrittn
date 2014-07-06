@@ -9,7 +9,7 @@ class AddSnippetBookmarkletController < ApplicationController
       if snippet.save
         snippet.create_activity :create, owner: current_user, parameters: { snippet_content: snippet.content }
 
-        response = { status: "success", username: current_user.name }
+        response = { status: "success" }
         render json: response.to_json, callback: params['callback']
       else
         response = { status: "fail", error: "Snippet couldn't be saved. Try again later." }
