@@ -17,7 +17,7 @@ describe "Authentication" do
       it { should have_selector('.alert.alert-error') }
 
       describe "after visiting another page" do
-        before { click_link "Rewrittn" }
+        before { click_link "rewrittn" }
         it { should_not have_selector('.alert.alert-error') }
       end
     end
