@@ -7,7 +7,7 @@
 
   <%= f.text_area :content_before_snippet %>
 
-  <p class="snippet"><%= @snippet.content %></p>
+  <p class="snippet"><%= simple_format @snippet.content %></p>
   <%= f.hidden_field :snippet_id, value: @snippet.id %>
 
   <%= f.text_area :content_after_snippet %>
