@@ -21,6 +21,9 @@ class AddSnippetBookmarkletController < ApplicationController
     end
   end
 
+  def bookmarklet
+  end
+
   private
 
     def snippet_params

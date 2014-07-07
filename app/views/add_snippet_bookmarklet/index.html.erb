@@ -1,1 +1,1 @@
-<%= link_to "Add snippet (jsonp)", "#{render 'add_snippet_bookmarklet.js'}" %>
+<a href="javascript:void((function(){var s = document.createElement('script');s.type = 'text/javascript';s.src = '<%= add_snippet_js_url %>';document.body.appendChild(s);})());">Add snippet (jsonp, external)</a>

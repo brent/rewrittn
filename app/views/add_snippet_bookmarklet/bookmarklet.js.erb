@@ -33,7 +33,7 @@ function getSelectionHtml() {
 
 function add_snippet_complete(data) {
   if(data.status == "success") {
-    alert("successfully snipped\n"+getSelectionHtml());
+    alert("successfully snipped\n\n"+getSelectionHtml());
   }
   else {
     alert(data.error);
