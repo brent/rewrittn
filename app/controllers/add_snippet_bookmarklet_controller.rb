@@ -11,14 +11,14 @@ class AddSnippetBookmarkletController < ApplicationController
         snippet.create_activity :create, owner: current_user, parameters: { snippet_content: snippet.content }
 
         response = { status: "success", url: snippet_url(snippet) }
-        render json: response.to_json, callback: params['callback']
+        render json: response.to_json, status: 200, callback: params['callback']
       else
         response = { status: "fail", error: "That snippet couldn't be saved." }
-        render json: response.to_json, callback: params['callback']
+        render json: response.to_json, status: 400, callback: params['callback']
       end
     else
       response = { status: "no-user", error: "Please sign in first", url: signin_url }
-      render json: response.to_json, callback: params['callback']
+      render json: response.to_json, status: 401, callback: params['callback']
     end
   end
 
