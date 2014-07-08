@@ -11,12 +11,12 @@ Rewrittn::Application.routes.draw do
 
   root "static_pages#home"
 
-  match "/bookmarklet", to: "add_snippet_bookmarklet#index",  via: 'get'
   match "/add_snippet_js", to: "add_snippet_bookmarklet#bookmarklet",  via: 'get'
-  match "/add_snippet", to: "add_snippet_bookmarklet#create", via: 'get'
-  match "/signup",      to: "users#new",                      via: 'get'
-  match "/signin",      to: "sessions#new",                   via: 'get'
-  match "/signout",     to: "sessions#destroy",               via: 'delete'
-  match "/about",       to: "static_pages#about",             via: 'get'
-  match "/contact",     to: "static_pages#contact",           via: 'get'
+  match "/bookmarklet",    to: "add_snippet_bookmarklet#index",        via: 'get'
+  match "/add_snippet",    to: "add_snippet_bookmarklet#create",       via: 'get'
+  match "/signup",         to: "users#new",                            via: 'get'
+  match "/signin",         to: "sessions#new",                         via: 'get'
+  match "/signout",        to: "sessions#destroy",                     via: 'delete'
+  match "/about",          to: "static_pages#about",                   via: 'get'
+  match "/contact",        to: "static_pages#contact",                 via: 'get'
 end
