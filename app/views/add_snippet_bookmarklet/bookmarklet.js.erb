@@ -32,13 +32,45 @@ function getSelectionHtml() {
 }
 
 function add_snippet_complete(data) {
-  if(data.status == "success") {
-    alert("successfully snipped\n\n"+getSelectionHtml());
+  // TODO: MUST EXTERNALIZE THIS INTO A CSS FILE
+  container = document.createElement("div");
+  container.id = "add-snippet-bookmarklet-container";
+  container.style.background = "#fff";
+  container.style.boxShadow = "0 0 3px rgba(0,0,0,0.3)";
+  container.style.borderRadius = "3px";
+  container.style.color = "#7f5891";
+  container.style.fontWeight = "bold";
+  container.style.fontSize = "18px";
+  container.style.padding = "15px 30px";
+  container.style.position = "fixed";
+  container.style.right = "30px";
+  container.style.top = "30px";
+  container.style.zIndex = "9999";
+
+  document.body.appendChild(container);
+
+  if (data.status == "success") {
+    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
+    container.innerHTML = "<p>Successfully added your snippet<p><p><a href='" + data.url + "' target='_blank'>view snippet</a></p>";
+  }
+  else if (data.status == "no-user") {
+    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
+    container.innerHTML = "<p>" + data.error + "</p><p><a href='" + data.url + "' target='_blank' style='font-size:16px'>sign in</a></p>";
   }
   else {
-    alert(data.error);
+    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
+    container.innerHTML = "<p>" + data.error + "</p>";
   }
 
   var s = document.getElementById("add-snippet-loadJSONP");
   s.parentNode.removeChild(s);
+  setTimeout(function(){
+    close_container();
+  }, 3000);
+}
+
+function close_container() {
+  addSnippetBookmarkletJs = document.getElementById('add-snippet-bookmarklet-js');
+  container.parentNode.removeChild(container);
+  addSnippetBookmarkletJs.parentNode.removeChild(addSnippetBookmarkletJs);
 }
