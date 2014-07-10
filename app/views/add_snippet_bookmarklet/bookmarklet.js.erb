@@ -1,15 +1,21 @@
 javascript: void((function() {
 
-  function add_snippet() {
+  function addSnippet() {
     var script = document.createElement("script");
     script.id = "add-snippet-loadJSONP";
     script.type = "text/javascript";
-    script.src = "<%= add_snippet_url %>?callback=add_snippet_complete&snippet[source]=" + encodeURI(window.location.href) + "&snippet[content]="+getSelectionHtml();
+    script.src = "<%= add_snippet_url %>?callback=addSnippetComplete&snippet[source]=" + encodeURI(window.location.href) + "&snippet[content]="+getSelectionHtml();
 
+    var stylesheet = document.createElement("link");
+    stylesheet.id = "add-snippet-css";
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "<%= root_url %>/css/bookmarklet.css";
+
+    document.body.appendChild(stylesheet);
     document.body.appendChild(script);
   }
 
-  add_snippet();
+  addSnippet();
 })());
 
 function getSelectionHtml() {
@@ -31,46 +37,28 @@ function getSelectionHtml() {
     return(html);
 }
 
-function add_snippet_complete(data) {
-  // TODO: MUST EXTERNALIZE THIS INTO A CSS FILE
+function addSnippetComplete(data) {
   container = document.createElement("div");
   container.id = "add-snippet-bookmarklet-container";
-  container.style.background = "#fff";
-  container.style.boxShadow = "0 0 3px rgba(0,0,0,0.3)";
-  container.style.borderRadius = "3px";
-  container.style.color = "#7f5891";
-  container.style.fontWeight = "bold";
-  container.style.fontSize = "18px";
-  container.style.padding = "15px 30px";
-  container.style.position = "fixed";
-  container.style.right = "30px";
-  container.style.top = "30px";
-  container.style.zIndex = "9999";
-
   document.body.appendChild(container);
 
   if (data.status == "success") {
-    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
-    container.innerHTML = "<p>Successfully added your snippet<p><p><a href='" + data.url + "' target='_blank'>view snippet</a></p>";
+    container.innerHTML = "<h2>Snippet snipped!</h2><p><a href='" + data.url + "' target='_blank'>view &raquo;</a></p>";
   }
   else if (data.status == "no-user") {
-    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
-    container.innerHTML = "<p>" + data.error + "</p><p><a href='" + data.url + "' target='_blank' style='font-size:16px'>sign in</a></p>";
+    container.innerHTML = "<h2>" + data.error + "</h2><p><a href='" + data.url + "' target='_blank' style='font-size:16px'>sign in</a></p>";
   }
   else {
-    // TODO: ADD CLASSES TO THESE ELEMENTS AND PUT STYLES INTO EXTERNAL CSS FILE
-    container.innerHTML = "<p>" + data.error + "</p>";
+    container.innerHTML = "<h2>" + data.error + "</h2>";
   }
 
   var s = document.getElementById("add-snippet-loadJSONP");
   s.parentNode.removeChild(s);
-  setTimeout(function(){
-    close_container();
-  }, 3000);
+  setTimeout(function(){ closeContainer(); }, 3000);
 }
 
-function close_container() {
-  addSnippetBookmarkletJs = document.getElementById('add-snippet-bookmarklet-js');
+function closeContainer() {
+  var addSnippetBookmarkletJs = document.getElementById('add-snippet-bookmarklet-js');
   container.parentNode.removeChild(container);
   addSnippetBookmarkletJs.parentNode.removeChild(addSnippetBookmarkletJs);
 }
