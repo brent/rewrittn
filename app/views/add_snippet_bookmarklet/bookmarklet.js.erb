@@ -1,0 +1,64 @@
+javascript: void((function() {
+
+  function addSnippet() {
+    var script = document.createElement("script");
+    script.id = "add-snippet-loadJSONP";
+    script.type = "text/javascript";
+    script.src = "<%= add_snippet_url %>?callback=addSnippetComplete&snippet[source]=" + encodeURI(window.location.href) + "&snippet[content]="+getSelectionHtml();
+
+    var stylesheet = document.createElement("link");
+    stylesheet.id = "add-snippet-css";
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "<%= root_url %>/css/bookmarklet.css";
+
+    document.body.appendChild(stylesheet);
+    document.body.appendChild(script);
+  }
+
+  addSnippet();
+})());
+
+function getSelectionHtml() {
+    var html = "";
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var container = document.createElement("div");
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+            }
+            html = container.innerHTML;
+        }
+    } else if (typeof document.selection != "undefined") {
+        if (document.selection.type == "Text") {
+            html = document.selection.createRange().htmlText;
+        }
+    }
+    return(html);
+}
+
+function addSnippetComplete(data) {
+  container = document.createElement("div");
+  container.id = "add-snippet-bookmarklet-container";
+  document.body.appendChild(container);
+
+  if (data.status == "success") {
+    container.innerHTML = "<h2>Snippet snipped!</h2><p><a href='" + data.url + "' target='_blank'>view &raquo;</a></p>";
+  }
+  else if (data.status == "no-user") {
+    container.innerHTML = "<h2>" + data.error + "</h2><p><a href='" + data.url + "' target='_blank' style='font-size:16px'>sign in</a></p>";
+  }
+  else {
+    container.innerHTML = "<h2>" + data.error + "</h2>";
+  }
+
+  var s = document.getElementById("add-snippet-loadJSONP");
+  s.parentNode.removeChild(s);
+  setTimeout(function(){ closeContainer(); }, 3000);
+}
+
+function closeContainer() {
+  var addSnippetBookmarkletJs = document.getElementById('add-snippet-bookmarklet-js');
+  container.parentNode.removeChild(container);
+  addSnippetBookmarkletJs.parentNode.removeChild(addSnippetBookmarkletJs);
+}
