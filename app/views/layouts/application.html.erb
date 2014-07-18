@@ -10,13 +10,13 @@
 
   <%= render 'shared/nav' %>
 
-  <div class="container">
+  <div>
     <% flash.each do |key, value| %>
       <p class="alert alert-<%= key %>"><%= value %></p>
     <% end %>
   </div>
 
-  <div class="container">
+  <div>
     <%= yield %>
   </div>
 

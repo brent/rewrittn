@@ -1,8 +1,9 @@
 * { box-sizing: border-box; }
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Lora:700italic|Bitter:400,700,400italic);
+@import url(http://fonts.googleapis.com/css?family=Fira+Sans:400,700|Droid+Serif:400,400italic);
 
 // VARIABLES
-@container-width: 44%;
+@container-width: 60%;
+@line-height: 1.5em;
 
 @light-gray: #aaa;
 @dark-gray: #444;
@@ -11,8 +12,8 @@
 
 @base-font-size: 16px;
 
-@primary-font-family: "Source Sans Pro", sans-serif;
-@secondary-font-family: Bitter, serif;
+@primary-font-family: "Droid Serif", serif;
+@secondary-font-family: "Fira Sans", sans-serif;
 
 
 // FLOATS
@@ -58,7 +59,6 @@ a {
   background: #eee;
   margin: 20px auto 0;
   padding: 20px;
-  width: @container-width;
 }
 
 .btn {
@@ -135,26 +135,4 @@ textarea {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 3px;
-}
-
-.snippet {
-  font: 30px @secondary-font-family;
-  font-style: italic;
-  line-height: 1.3em;
-  margin: 30px 0;
-
-  > a {
-    display: block;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  .snippet-meta {
-    display: block;
-    font-style: italic;
-    font-size: 14px;
-    margin: -5px 0 0 20px;
-  }
 }

@@ -1,26 +1,39 @@
 <% if !@rewrite.nil? %>
+
   <div class="rewrite-single">
-    <small class="timestamp"><%= time_ago_in_words(@rewrite.created_at) %> ago</small>
-    <h3 class="user-meta"><%= link_to @rewrite.user.name, @rewrite.user %> <%= rewrite_action_word %></h3>
-    <h2 class="rewrite-title"><%= @rewrite.title %></h2>
 
-    <% unless @rewrite.content_before_snippet.nil? %>
-      <div class="rewrite rewrite-before">
-        <%= simple_format @rewrite.content_before_snippet %>
-      </div>
-    <% end %>
+    <div class="cover-image-full"></div>
 
-    <div class="snippet">
-      <a href="<%= snippet_path(@rewrite.snippet) %>">
-        <%= simple_format @rewrite.snippet.content %>
-      </a>
-      <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
+    <div class="rewrite-meta container">
+      <small class="read-time">1 min read</small>
+      <small class="timestamp"><%= time_ago_in_words(@rewrite.created_at) %> ago</small>
+      <h2 class="rewrite-title"><%= @rewrite.title %></h2>
+      <h3 class="user-meta"><%= link_to @rewrite.user.name, @rewrite.user %> <%= rewrite_action_word %></h3>
     </div>
 
-    <% unless @rewrite.content_after_snippet.nil? %>
-      <div class="rewrite rewrite-after">
-        <%= simple_format @rewrite.content_after_snippet %>
+    <div class="rewrite-content container">
+
+      <% unless @rewrite.content_before_snippet.empty? %>
+        <div class="rewrite rewrite-before">
+          <%= simple_format @rewrite.content_before_snippet %>
+        </div>
+      <% end %>
+
+      <div class="snippet rewrite-snippet">
+        <a href="<%= snippet_path(@rewrite.snippet) %>">
+          <%= simple_format @rewrite.snippet.content %>
+        </a>
+        <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
       </div>
-    <% end %>
+
+      <% unless @rewrite.content_after_snippet.empty? %>
+        <div class="rewrite rewrite-after">
+          <%= simple_format @rewrite.content_after_snippet %>
+        </div>
+      <% end %>
+
+    </div>
+
   </div>
+
 <% end %>
