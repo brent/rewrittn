@@ -1,7 +1,7 @@
 <% if !@rewrite.nil? %>
   <div class="rewrite-single">
     <small class="timestamp"><%= time_ago_in_words(@rewrite.created_at) %> ago</small>
-    <h3 class="user-meta"><%= link_to @rewrite.user.name, @rewrite.user %> <%= rewrite_action_word %></h3>
+    <h3 class="user-meta">written by<%= link_to @rewrite.user.name, @rewrite.user %></h3>
     <h2 class="rewrite-title"><%= @rewrite.title %></h2>
 
     <% unless @rewrite.content_before_snippet.empty? %>
@@ -14,7 +14,7 @@
       <a href="<%= snippet_path(@rewrite.snippet) %>">
         <%= simple_format @rewrite.snippet.content %>
       </a>
-      <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
+      <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= link_to parse_source_url(@rewrite.snippet.source), @rewrite.snippet.source %></span>
     </div>
 
     <% unless @rewrite.content_after_snippet.empty? %>
