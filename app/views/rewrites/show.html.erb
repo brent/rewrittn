@@ -4,7 +4,7 @@
     <h3 class="user-meta"><%= link_to @rewrite.user.name, @rewrite.user %> <%= rewrite_action_word %></h3>
     <h2 class="rewrite-title"><%= @rewrite.title %></h2>
 
-    <% unless @rewrite.content_before_snippet.nil? %>
+    <% unless @rewrite.content_before_snippet.empty? %>
       <div class="rewrite rewrite-before">
         <%= simple_format @rewrite.content_before_snippet %>
       </div>
@@ -17,7 +17,7 @@
       <span class="snippet-meta">from <%= link_to @rewrite.snippet.user.name, @rewrite.snippet.user %> via <%= @rewrite.snippet.source %></span>
     </div>
 
-    <% unless @rewrite.content_after_snippet.nil? %>
+    <% unless @rewrite.content_after_snippet.empty? %>
       <div class="rewrite rewrite-after">
         <%= simple_format @rewrite.content_after_snippet %>
       </div>
