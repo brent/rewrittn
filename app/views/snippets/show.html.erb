@@ -4,7 +4,7 @@
 
   <div class="snippet">
     <%= simple_format @snippet.content %>
-    <p class="snippet-meta">via <%= @snippet.source %></p>
+    <p class="snippet-meta">via <%= link_to parse_source_url(@snippet.source), @snippet.source %></p>
   </div>
 
   <div>
