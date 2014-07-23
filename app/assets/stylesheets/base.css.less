@@ -1,8 +1,9 @@
 * { box-sizing: border-box; }
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Lora:700italic|Bitter:400,700,400italic);
+@import url(http://fonts.googleapis.com/css?family=Fira+Sans:400,700|Droid+Serif:400,400italic);
 
 // VARIABLES
-@container-width: 44%;
+@container-width: 60%;
+@line-height: 1.5em;
 
 @light-gray: #aaa;
 @dark-gray: #444;
@@ -11,8 +12,8 @@
 
 @base-font-size: 16px;
 
-@primary-font-family: "Source Sans Pro", sans-serif;
-@secondary-font-family: Bitter, serif;
+@primary-font-family: "Droid Serif", serif;
+@secondary-font-family: "Fira Sans", sans-serif;
 
 
 // FLOATS
@@ -58,19 +59,23 @@ a {
   background: #eee;
   margin: 20px auto 0;
   padding: 20px;
-  width: @container-width;
 }
 
 .btn {
-  display: inline-block;
-  padding: 10px 5px;
-  border-radius: 3px;
   background: @light-gray;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0 1px solid rgba(0,0,0,0.15);
+  display: inline-block;
+  font-family: @secondary-font-family;
+  font-size: inherit;
+  padding: 10px 30px;
   text-decoration: none;
 }
 
 .btn-primary {
   background: @link-color;
+  color: white;
 }
 
 // FORMS
@@ -130,31 +135,8 @@ textarea {
 
 .timestamp {
   color: #aaa;
-  display: block;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 3px;
-}
-
-.snippet {
-  font: 30px @secondary-font-family;
-  font-style: italic;
-  line-height: 1.3em;
-  margin: 30px 0;
-
-  > a {
-    display: block;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  .snippet-meta {
-    display: block;
-    font-style: italic;
-    font-size: 14px;
-    margin: -5px 0 0 20px;
-  }
 }

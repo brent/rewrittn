@@ -1,14 +1,21 @@
+<% content_for :custom_head do %>
+  <%= stylesheet_link_tag :transparent_header -%>
+<% end %>
+
 <div class="snippet-single">
-  <small class="timestamp"><%= time_ago_in_words(@snippet.created_at) %> ago</small>
-  <p><%= link_to @snippet.user.name, @snippet.user, class: "username" %> added</p>
+  <div class="snippet-single-inner container">
+    <small class="timestamp"><%= time_ago_in_words(@snippet.created_at) %> ago</small>
 
-  <div class="snippet">
-    <%= simple_format @snippet.content %>
-    <p class="snippet-meta">via <%= link_to parse_source_url(@snippet.source), @snippet.source %></p>
-  </div>
+    <div class="snippet-container">
+      <%= simple_format @snippet.content, class: "snippet" %>
+      <div class="snippet-meta">
+        <p class="snippet-user">snipped by <%= link_to @snippet.user.name, @snippet.user, class: "username" %> from <%= link_to parse_source_url(@snippet.source), @snippet.source %></p>
+      </div><!-- END .snippet-meta -->
+    </div>
 
-  <div>
-    <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id), class: "btn btn-primary" %>
-    <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
-  </div>
-</div>
+    <div class="snippet-cta">
+      <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id), class: "btn btn-primary" %>
+      <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
+    </div>
+  </div><!-- END .snippet-single-inner.container -->
+</div><!-- END .snippet-single -->

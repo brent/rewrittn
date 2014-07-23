@@ -1,16 +1,19 @@
-<% provide(:title, "Write on, writer") %>
+<div class="rewrite-new container">
 
-<%= form_for @rewrite do |f| %>
+  <% provide(:title, "Write on, writer") %>
 
-  <%= f.label :title %>
-  <%= f.text_field :title %>
+  <%= form_for @rewrite, html: { class: "rewrite-form" } do |f| %>
 
-  <%= f.text_area :content_before_snippet %>
+    <%= f.text_field :title, placeholder: "Title" %>
 
-  <p class="snippet"><%= simple_format @snippet.content %></p>
-  <%= f.hidden_field :snippet_id, value: @snippet.id %>
+    <%= f.text_area :content_before_snippet, placeholder: "Write something before the snippet" %>
 
-  <%= f.text_area :content_after_snippet %>
+    <%= simple_format @snippet.content, class: "snippet" %>
+    <%= f.hidden_field :snippet_id, value: @snippet.id %>
 
-  <%= f.button "publish", class: "btn" %>
-<% end %>
+    <%= f.text_area :content_after_snippet, placeholder: "Write something after the snippet" %>
+
+    <%= f.button "publish", class: "btn btn-primary" %>
+  <% end %>
+
+</div>

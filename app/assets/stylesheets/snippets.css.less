@@ -1,13 +1,55 @@
 @import url('base.css.less');
 
-.snippet-single {
+.snippet > a {
+  display: block;
+  text-decoration: none;
+}
 
-  .snippet {
-    color: @dark-gray;
-    font-style: normal;
+.snippet {
+  color: @dark-gray;
+  font-style: normal;
+}
+
+.snippet-meta {
+  color: @medium-gray;
+  display: block;
+}
+
+.controller-snippets {
+  background: @link-color;
+
+  .snippet-single {
+    padding: 100px 0 30px;
+  }
+
+  .snippet-container {
+
+    .snippet {
+      color: white;
+      font-family: @secondary-font-family;
+      font-size: 3em;
+      line-height: 1.15em;
+    }
   }
 
   .snippet-meta {
-    color: @medium-gray;
+    font-style: italic;
+    padding-left: 30px;
+    color: white;
+
+    a {
+      color: #fff281;
+    }
+  }
+
+  .snippet-cta {
+    margin-top: 30px;
+  }
+
+  .btn {
+    background: #fff281;
+    color: #a7a062;
+    font-size: 1.1em;
+    font-weight: bold;
   }
 }

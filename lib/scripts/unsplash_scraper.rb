@@ -28,7 +28,7 @@ while true
     unsplash_month_links.each do |unsplash_img_page|
       img_page = Nokogiri::HTML(open(unsplash_img_page))
 
-      unsplash_imgs["#{year}_#{month_with_leading_zero}"] << img_page.css(".post .photo_img")[0]["src"]
+      unsplash_imgs["#{year}_#{month_with_leading_zero}"] << img_page.css(".post .photo_div a")[0]["href"]
     end
 
     puts "Grabbed images from #{month}/#{year}..."

@@ -1,15 +1,14 @@
-<h2>Welcome to Rewrittn</h2>
 <% if signed_in? %>
-<%= render "shared/stats" %>
+  <div class="container">
 
-<%= will_paginate @feed_items %>
+    <ol class="feed">
+      <%= render_activity(@feed_items) %>
+    </ol>
 
-<ol class="feed">
-  <%= render_activity(@feed_items) %>
-</ol>
+    <%= will_paginate @feed_items %>
 
-<%= will_paginate @feed_items %>
-
-<% else %>
-<p>Not a member? <%= link_to "Sign up", signup_path %></p>
+    <% else %>
+    <h2>Welcome to Rewrittn</h2>
+    <p>Not a member? <%= link_to "Sign up", signup_path %></p>
+  </div>
 <% end %>
