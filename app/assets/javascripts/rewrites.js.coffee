@@ -9,4 +9,6 @@ $(document).ready ->
     return
 
   resizeText $("#rewrite-title")
+
+  $('textarea').autosize()
   return
