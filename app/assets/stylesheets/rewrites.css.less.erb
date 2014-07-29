@@ -40,7 +40,14 @@
   }
 
   .rewrite-snippet {
-    margin-bottom: 0.9375em;
+    font-size: 1.5em;
+    margin: 30px 0;
+
+    a, p {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
   }
 
   .rewrite-snippet .snippet-meta {
@@ -57,8 +64,7 @@
     transition: opacity 500ms;
   }
 
-  .rewrite-snippet, .rewrite p {
-    font-family: inherit;
+  .rewrite p {
     font-size: 1.5em;
     font-style: normal;
     line-height: @line-height;
@@ -92,11 +98,9 @@
       padding: 10px 0;
     }
   }
+}
 
-  .snippet {
-    font-family: @primary-font-family;
-    font-size: 1.5em;
-    line-height: 1.25em;
-    margin: 30px 0;
-  }
+.snippet {
+  font-family: @secondary-font-family;
+  line-height: 1.25em;
 }
