@@ -12,7 +12,7 @@ FactoryGirl.define do
 
   factory :snippet do
     content "s" * 51
-    source "user"
+    source "http://google.com/"
     user
   end
 

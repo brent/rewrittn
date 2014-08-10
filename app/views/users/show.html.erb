@@ -21,7 +21,7 @@
 
   <% else %>
     <% if @user == current_user %>
-      <p>You don't have any activity yet. Why not <%= link_to "enjoy a rewrite", rewrite_path(rand(Rewrite.count)) %>, <%= link_to "add a snippet", new_snippet_path %>, or <%= link_to "rewrite something of your own", snippets_path %>?</p>
+      <p>You don't have any activity yet. Why not <%= link_to "enjoy a rewrite", rewrite_path(rand(Rewrite.count)) %>, <%= link_to "add a snippet", new_snippet_path %>, or <%= link_to "rewrite something of your own", snippets_path(rand(Snippet.count)) %>?</p>
     <% else %>
       <p><%= @user.name %> doesn't have any activity yet. Bummer.</p>
     <% end %>

@@ -1,12 +1,14 @@
 class User < ActiveRecord::Base
   has_many :snippets, dependent: :destroy
+  has_many :rewrites, dependent: :destroy
+
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
-  has_many :followed_users, through: :relationships, source: :followed
   has_many :reverse_relationships, foreign_key: "followed_id",
                                    class_name: "Relationship",
                                    dependent: :destroy
+
+  has_many :followed_users, through: :relationships, source: :followed
   has_many :followers, through: :reverse_relationships, source: :follower
-  has_many :rewrites, dependent: :destroy
 
   before_save { self.email.downcase! }
   before_create :create_remember_token
@@ -39,15 +41,23 @@ class User < ActiveRecord::Base
   end
 
   def following?(other_user)
-    relationships.find_by(followed_id: other_user.id)
+    relationships.find_by(followed_id: other_user.id, followed_type: "User")
   end
 
-  def follow!(other_user)
-    relationships.create!(followed_id: other_user.id)
+  def starred_snippets
+    relationships.starred_snippets
   end
 
-  def unfollow!(other_user)
-    relationships.find_by(followed_id: other_user.id).destroy
+  def starred_rewrites
+    relationships.starred_rewrites
+  end
+
+  def star!(target)
+    relationships.create!(followed_id: target.id, followed_type: target.class.to_s)
+  end
+
+  def unstar!(target)
+    relationships.find_by(followed_id: target.id, followed_type: target.class.to_s).destroy
   end
 
   private

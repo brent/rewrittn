@@ -21,9 +21,9 @@ describe User do
   it { should respond_to(:followed_users) }
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
-  it { should respond_to(:follow!) }
+  it { should respond_to(:star!) }
   it { should respond_to(:following?) }
-  it { should respond_to(:unfollow!) }
+  it { should respond_to(:unstar!) }
   it { should respond_to(:rewrites) }
   it { should respond_to(:rewrites_feed) }
 
@@ -151,7 +151,7 @@ describe User do
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
-        @user.follow!(followed_user)
+        @user.star!(followed_user)
         3.times { followed_user.snippets.create!(content: "a" * 51, source: @user) }
       end
 
@@ -170,14 +170,14 @@ describe User do
     let(:other_user) { FactoryGirl.create(:user) }
     before do
       @user.save
-      @user.follow!(other_user)
+      @user.star!(other_user)
     end
 
     it { should be_following(other_user) }
     its(:followed_users) { should include(other_user) }
 
     describe "and unfollowing" do
-      before { @user.unfollow!(other_user) }
+      before { @user.unstar!(other_user) }
 
       it { should_not be_following(other_user) }
       its(:followed_users) { should_not include(other_user) }
@@ -223,7 +223,7 @@ describe User do
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
-        @user.follow!(followed_user)
+        @user.star!(followed_user)
         3.times { followed_user.rewrites.create!(title: "I Really Hope This Works", content_before_snippet: "Content" * 40, snippet: FactoryGirl.create(:snippet, user: followed_user)) }
       end
 
