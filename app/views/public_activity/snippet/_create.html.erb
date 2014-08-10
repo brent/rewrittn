@@ -1,4 +1,4 @@
-<li class="feed-item feed-snippet-create" id=<%= activity.trackable_id %>>
+<li class="feed-item feed-snippet-create" id=<%= "#{activity.trackable_type[0].downcase}-#{activity.trackable_id}" %>>
 
   <small class="timestamp"><%= time_ago_in_words(activity.created_at) %> ago</small>
   <p><%= link_to User.find(activity.owner_id).name, User.find(activity.owner_id), class: "username" %> added a snippet</p>

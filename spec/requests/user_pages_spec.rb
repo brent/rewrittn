@@ -26,13 +26,13 @@ describe "User pages" do
 
     it "should show the user's activity" do
       PublicActivity::Activity.where(owner_id: user.id).each do |item|
-        expect(page).to have_selector("li##{item.trackable_id}")
+        expect(page).to have_selector("li#s-#{item.trackable_id}")
       end
     end
 
     it "should not show activity from other users" do
       PublicActivity::Activity.where(owner_id: user.id).each do |item|
-        expect(page).to_not have_selector("li##{other_user.rewrites.last.id}")
+        expect(page).to_not have_selector("li#r-#{other_user.rewrites.last.id}")
       end
     end
 
@@ -63,7 +63,7 @@ describe "User pages" do
 
       describe "unfollowing a user" do
         before do
-          user.follow!(other_user)
+          user.star!(other_user)
           visit user_path(other_user)
         end
 
@@ -230,7 +230,7 @@ describe "User pages" do
   describe "following/followers" do
     let(:user) { FactoryGirl.create(:user) }
     let(:other_user) { FactoryGirl.create(:user) }
-    before { user.follow!(other_user) }
+    before { user.star!(other_user) }
 
     describe "followed users" do
       before do

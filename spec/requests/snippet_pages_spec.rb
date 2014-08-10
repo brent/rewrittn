@@ -36,7 +36,7 @@ describe "Snippet pages" do
 
       before do
         fill_in 'Content', with: 'x'*51
-        fill_in 'Source', with: user.name
+        fill_in 'Source', with: "http://www.google/com"
       end
 
       it "should create a snippet" do
