@@ -16,6 +16,9 @@
       </div>
 
       <h3 class="user-meta">written by<%= link_to @rewrite.user.name, @rewrite.user %></h3>
+      <div class="rewrite-star-count">
+        <%= render 'shared/star_form' if signed_in? %>
+      </div>
 
     </div>
 

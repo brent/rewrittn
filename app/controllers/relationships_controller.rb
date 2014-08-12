@@ -2,19 +2,20 @@ class RelationshipsController < ApplicationController
   before_action :signed_in_user
 
   def create
-    @user = User.find(params[:relationship][:followed_id])
-    current_user.star!(@user)
+    @target = params[:relationship][:followed_type].constantize.find(params[:relationship][:followed_id])
+    current_user.star!(@target)
     respond_to do |format|
-      format.html { redirect_to @user }
+      format.html { redirect_to @target }
       format.js
     end
   end
 
   def destroy
-    @user = Relationship.find(params[:id]).followed
-    current_user.unstar!(@user)
+    @relationship = Relationship.find(params[:id])
+    @target = @relationship.followed_type.constantize.find(@relationship[:followed_id])
+    current_user.unstar!(@target)
     respond_to do |format|
-      format.html { redirect_to @user }
+      format.html { redirect_to @target }
       format.js
     end
   end

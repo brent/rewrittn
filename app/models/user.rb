@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id, followed_type: "User")
   end
 
+  def starred?(target)
+    relationships.find_by(followed_id: target.id, followed_type: target.class.to_s)
+  end
+
   def starred_snippets
     relationships.starred_snippets
   end

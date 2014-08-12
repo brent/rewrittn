@@ -5,7 +5,7 @@ class RewritesController < ApplicationController
   end
 
   def show
-    @rewrite = Rewrite.find_by(id: params[:id])
+    @rewrite = @target = Rewrite.find_by(id: params[:id])
   end
 
   def new
