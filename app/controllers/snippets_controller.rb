@@ -3,7 +3,7 @@ class SnippetsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def show
-    @snippet = Snippet.find_by(id: params[:id])
+    @snippet = @target = Snippet.find_by(id: params[:id])
   end
 
   def new

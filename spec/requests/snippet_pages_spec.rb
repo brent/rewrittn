@@ -20,6 +20,29 @@ describe "Snippet pages" do
     it "should have a rewrite button" do
       expect(page).to have_link("rewrite", href: new_rewrite_path(snippet: snippet.id))
     end
+
+    describe "star/unstar buttons" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      let(:other_snippet) { FactoryGirl.create(:snippet, user: other_user) }
+      before { visit snippet_path(other_snippet) }
+
+      it "should have the star button" do
+        expect(page).to have_selector('.star-btn')
+      end
+
+      describe "starring a snippet" do
+        it "should increment the starred snippets count" do
+          expect do
+            click_button "Star"
+          end.to change(user.starred_snippets, :count).by(1)
+        end
+      end
+
+      describe "toggling the button" do
+        before { click_button "Star" }
+        it { should have_xpath("//input[@value='Unstar']") }
+      end
+    end
   end
 
   describe "snippet creation" do

@@ -13,6 +13,10 @@
       </div><!-- END .snippet-meta -->
     </div>
 
+    <div class="rewrite-star-count">
+      <%= render 'shared/star_form' if signed_in? %>
+    </div>
+
     <div class="snippet-cta">
       <%= link_to "rewrite", new_rewrite_path(snippet: @snippet.id), class: "btn btn-primary" %>
       <%= link_to "delete", @snippet, method: :delete, data: { confirm: "Are you sure?" } %>
