@@ -11,12 +11,12 @@ describe RelationshipsController do
 
     it "should increment the Relationship count" do
       expect do
-        xhr :post, :create, relationship: { followed_id: other_user.id }
+        xhr :post, :create, relationship: { followed_id: other_user.id, followed_type: "User" }
       end.to change(Relationship, :count).by(1)
     end
 
     it "should respond with success" do
-      xhr :post, :create, relationship: { followed_id: other_user.id }
+      xhr :post, :create, relationship: { followed_id: other_user.id, followed_type: "User" }
       expect(response).to be_success
     end
   end
@@ -25,7 +25,7 @@ describe RelationshipsController do
 
     before { user.star!(other_user) }
     let(:relationship) do
-      user.relationships.find_by(followed_id: other_user.id)
+      user.relationships.find_by(followed_id: other_user.id, followed_type: other_user.class.to_s)
     end
 
     it "should decrement the Relationship count" do

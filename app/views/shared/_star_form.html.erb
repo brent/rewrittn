@@ -1,0 +1,7 @@
+<div class="star-form">
+  <% if current_user.starred?(@target) %>
+    <%= render 'shared/unstar' %>
+  <% else %>
+    <%= render 'shared/star' %>
+  <% end %>
+</div>

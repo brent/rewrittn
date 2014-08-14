@@ -42,6 +42,29 @@ describe "Rewrite pages" do
     it "should display the rewrite" do
       expect(page).to have_content(rewrite.content_before_snippet || rewrite.content_after_snippet)
     end
+
+    describe "star/unstar buttons" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      let(:other_rewrite) { FactoryGirl.create(:rewrite, user: other_user, snippet: snippet) }
+      before { visit rewrite_path(other_rewrite) }
+
+      it "should have the star button" do
+        expect(page).to have_selector('.star-btn')
+      end
+
+      describe "starring a rewrite" do
+        it "should increment the starred rewrites count" do
+          expect do
+            click_button "Star"
+          end.to change(user.starred_rewrites, :count).by(1)
+        end
+      end
+
+      describe "toggling the button" do
+        before { click_button "Star" }
+        it { should have_xpath("//input[@value='Unstar']") }
+      end
+    end
   end
 
   describe "rewrite creation" do

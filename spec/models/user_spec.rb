@@ -22,6 +22,7 @@ describe User do
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
   it { should respond_to(:star!) }
+  it { should respond_to(:starred?) }
   it { should respond_to(:following?) }
   it { should respond_to(:unstar!) }
   it { should respond_to(:rewrites) }
