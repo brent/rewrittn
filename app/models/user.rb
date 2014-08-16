@@ -2,12 +2,12 @@ class User < ActiveRecord::Base
   has_many :snippets, dependent: :destroy
   has_many :rewrites, dependent: :destroy
 
-  has_many :stars, foreign_key: "follower_id", dependent: :destroy
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_relationships, foreign_key: "followed_id",
                                    class_name: "Relationship",
                                    dependent: :destroy
 
-  has_many :followed_users, through: :stars, source: :followed
+  has_many :followed_users, through: :relationships, source: :followed
   has_many :followers, through: :reverse_relationships, source: :follower
 
   before_save { self.email.downcase! }
@@ -41,27 +41,27 @@ class User < ActiveRecord::Base
   end
 
   def following?(other_user)
-    stars.find_by(followed_id: other_user.id, followed_type: "User")
+    relationships.find_by(followed_id: other_user.id, followed_type: "User")
   end
 
   def starred?(target)
-    stars.find_by(followed_id: target.id, followed_type: target.class.to_s)
+    relationships.find_by(followed_id: target.id, followed_type: target.class.to_s)
   end
 
   def starred_snippets
-    stars.starred_snippets
+    relationships.starred_snippets
   end
 
   def starred_rewrites
-    stars.starred_rewrites
+    relationships.starred_rewrites
   end
 
   def star!(target)
-    stars.create!(followed_id: target.id, followed_type: target.class.to_s)
+    relationships.create!(followed_id: target.id, followed_type: target.class.to_s)
   end
 
   def unstar!(target)
-    stars.find_by(followed_id: target.id, followed_type: target.class.to_s).destroy
+    relationships.find_by(followed_id: target.id, followed_type: target.class.to_s).destroy
   end
 
   private
