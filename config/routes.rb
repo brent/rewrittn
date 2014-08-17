@@ -9,7 +9,7 @@ Rewrittn::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :rewrites
 
-  root "static_pages#home"
+  root "users#reading_list"
 
   match "/add_snippet_js", to: "add_snippet_bookmarklet#bookmarklet",  via: 'get'
   match "/bookmarklet",    to: "add_snippet_bookmarklet#index",        via: 'get'

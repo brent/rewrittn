@@ -69,6 +69,10 @@ class UsersController < ApplicationController
     @rewrites = @user.rewrites.paginate(page: params[:page])
   end
 
+  def reading_list
+    @reading_list_items = Rewrite.reading_list.paginate(page:params[:page])
+  end
+
   private
 
     def user_params
