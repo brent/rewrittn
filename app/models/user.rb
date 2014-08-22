@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: target.id, followed_type: target.class.to_s).destroy
   end
 
+  def stars
+    relationships
+  end
+
   private
 
     def create_remember_token

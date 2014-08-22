@@ -291,4 +291,19 @@ describe "User pages" do
       end
     end
   end
+
+  describe "reading list" do
+    let(:user)    { FactoryGirl.create(:user) }
+    let(:snippet) { FactoryGirl.create(:snippet) }
+
+    before do
+      31.times do
+        rewrite = FactoryGirl.create(:rewrite, user: user, snippet: snippet)
+        user.star!(rewrite)
+      end
+      visit root_path
+    end
+
+    it { should have_selector('.pagination') }
+  end
 end

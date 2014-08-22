@@ -4,7 +4,8 @@ class Rewrite < ActiveRecord::Base
   belongs_to :user
   belongs_to :snippet
 
-  default_scope -> { order('created_at DESC') }
+  scope :by_stars, -> { order("stars_count DESC") }
+  scope :recent,   -> { order("created_at DESC") }
 
   validates :user_id,    presence: true
   validates :snippet_id, presence: true
@@ -17,8 +18,22 @@ class Rewrite < ActiveRecord::Base
     end
   end
 
+  def stars
+    Relationship.where(followed_id: id, followed_type: "Rewrite").count
+  end
+
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
     where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", followed_user_ids: followed_user_ids, user_id: user)
+  end
+
+  def self.reading_list
+    select("rewrites.*, COUNT(*) AS stars_count, relationships.followed_id")
+    .joins("INNER JOIN relationships ON rewrites.id = relationships.followed_id")
+    .where("relationships.followed_type = 'Rewrite'")
+    .group("relationships.followed_id")
+    .by_stars
+
+    # find_by_sql("SELECT rewrites.*, COUNT(*) AS stars_count, relationships.followed_id FROM rewrites INNER JOIN relationships ON rewrites.id = relationships.followed_id WHERE relationships.followed_type = 'Rewrite' GROUP BY relationships.followed_id ORDER BY stars_count DESC")
   end
 end

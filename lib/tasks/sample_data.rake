@@ -3,8 +3,8 @@ namespace :db do
   task populate: :environment do
     make_users
     make_snippets
-    make_relationships
     make_rewrites
+    make_relationships
     make_activity
   end
 end
@@ -33,15 +33,6 @@ def make_snippets
   end
 end
 
-def make_relationships
-  users = User.all
-  user  = users.first
-  followed_users = users[2..50]
-  followers      = users[3..40]
-  followed_users.each { |followed| user.star!(followed) }
-  followers.each      { |follower| follower.star!(user) }
-end
-
 def make_rewrites
   users = User.all(limit: 6)
   30.times do |n|
@@ -62,6 +53,20 @@ def make_rewrites
       end
     end
   end
+end
+
+def make_relationships
+  users = User.all
+  user  = users.first
+
+  followed_users = users[2..50]
+  followers      = users[3..40]
+  followed_users.each { |followed| user.star!(followed) }
+  followers.each      { |follower| follower.star!(user) }
+
+  30.times { User.find(rand(1..User.all.count)).star!(Snippet.find(rand(1..Snippet.all.count))) }
+
+  30.times { User.find(rand(1..User.all.count)).star!(Rewrite.find(rand(1..Rewrite.all.count))) }
 end
 
 def make_activity
