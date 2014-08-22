@@ -1,1 +1,6 @@
-<li><%= link_to reading_list_item.title, reading_list_item %></li>
+<li id="rewrite-<%= "#{rewrite.id}" %>">
+  <p><%= link_to rewrite.title, rewrite %></p>
+  <p>written by <%= link_to rewrite.user.name, rewrite.user %></p>
+  <p><%= pluralize(rewrite.stars, 'star') %></p>
+  <br /><br />
+</li>

@@ -35,12 +35,6 @@ describe "StaticPages" do
         visit root_path
       end
 
-      it "should show the user's feed" do
-        PublicActivity::Activity.all.each do |item|
-          expect(page).to have_selector("li#s-#{item.trackable_id}")
-        end
-      end
-
       describe "follower/following counts" do
         let(:other_user) { FactoryGirl.create(:user) }
         before do

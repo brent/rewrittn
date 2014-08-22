@@ -202,7 +202,7 @@ describe User do
     end
 
     it "should have the right rewrites in the right order" do
-      expect(@user.rewrites.to_a).to eq [second_rewrite, first_rewrite]
+      expect(@user.rewrites.recent.to_a).to eq [second_rewrite, first_rewrite]
     end
 
     it "should destroy associated rewrites" do
