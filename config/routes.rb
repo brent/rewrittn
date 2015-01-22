@@ -14,6 +14,7 @@ Rewrittn::Application.routes.draw do
   match "/add_snippet_js", to: "add_snippet_bookmarklet#bookmarklet",  via: 'get'
   match "/bookmarklet",    to: "add_snippet_bookmarklet#index",        via: 'get'
   match "/add_snippet",    to: "add_snippet_bookmarklet#create",       via: 'get'
+  match "/activity",       to: "static_pages#home",                    via: 'get'
   match "/signup",         to: "users#new",                            via: 'get'
   match "/signin",         to: "sessions#new",                         via: 'get'
   match "/signout",        to: "sessions#destroy",                     via: 'delete'
