@@ -1,5 +1,4 @@
 <% content_for :custom_head do %>
-  <%= stylesheet_link_tag :transparent_header -%>
 <% end %>
 
 <% if !@rewrite.nil? %>
@@ -7,13 +6,11 @@
   <div class="rewrite-single">
 
     <div class="rewrite-meta container">
-      <small class="read-time">1 min read</small>
-      <small class="timestamp">added <%= time_ago_in_words(@rewrite.created_at) %> ago</small>
       <div class="rewrite-title-container">
         <h2 class="rewrite-title" id="rewrite-title"><%= @rewrite.title %></h2>
       </div>
 
-      <h3 class="user-meta">written by<%= link_to @rewrite.user.name, @rewrite.user %></h3>
+      <h3 class="user-meta"><small class="timestamp">added <%= time_ago_in_words(@rewrite.created_at) %> ago</small> | <small class="read-time">1 min read</small> | written by<%= link_to @rewrite.user.name, @rewrite.user %></h3>
       <div class="rewrite-star-count">
         <%= render 'shared/star_form' if signed_in? %>
       </div>

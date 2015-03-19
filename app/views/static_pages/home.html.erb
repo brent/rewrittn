@@ -1,6 +1,7 @@
 <div class="container">
 
   <% if signed_in? %>
+    <%= render "shared/feed_toggle" %>
     <ol class="feed">
       <%= render_activity(@feed_items) %>
     </ol>
