@@ -3,7 +3,7 @@
 <div class="user-info">
   <h2><%= @user.name %></h2>
   <%= render 'shared/stats' %>
-  <%= render 'shared/star_form' if signed_in? %>
+  <%= render 'shared/star_form' if signed_in? && @user != current_user %>
 </div>
 
 <div class="main-col">

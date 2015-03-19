@@ -40,7 +40,13 @@ describe "User pages" do
       let(:other_user) { FactoryGirl.create(:user) }
       before { sign_in user }
 
-      describe "following a user" do
+      describe "should not be present on a user's own profile" do
+        before { visit user_path(user) }
+        it { should_not have_selector("div.star-form") }
+        # expect(page).to_not have_selector("div.star-form")
+      end
+
+      context "when following a user" do
         before { visit user_path(other_user) }
 
         it "should increment the followed user count" do
