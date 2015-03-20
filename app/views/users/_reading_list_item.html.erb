@@ -1,5 +1,6 @@
 <li class="reading-list-item" id="rewrite-<%= "#{rewrite.id}" %>">
   <h2 class="reading-list-item-title"><%= link_to rewrite.title, rewrite %></h2>
   <p class="reading-list-item-meta">
-    <span class="reading-list-item-stars"><%= pluralize(rewrite.stars, 'star') %></span> | <span class="reading-list-item-byline">written by <%= link_to rewrite.user.name, rewrite.user %></span></p>
+    <span class="reading-list-item-stars"><%= pluralize(rewrite.stars, 'star') %></span> | <span class="reading-list-item-byline">written by <%= link_to rewrite.user.name, rewrite.user %></span>
+  </p>
 </li>
