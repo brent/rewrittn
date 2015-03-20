@@ -1,0 +1,9 @@
+<div class="feed-toggle">
+  <% if current_page? root_path %>
+    <span class="feed-toggle--active">Reading list</span>
+    <%= link_to "Activity", activity_path %>
+  <% else %>
+    <%= link_to "Reading list", root_path %>
+    <span class="feed-toggle--active">Activity</span>
+  <% end %>
+</div>

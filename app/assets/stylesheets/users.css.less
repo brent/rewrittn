@@ -1,1 +1,31 @@
+@import url('base.css.less');
 
+.reading-list {
+  margin-top: 60px;
+}
+
+.reading-list-item {
+  margin-bottom: 60px;
+}
+
+.reading-list-item-title {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.25em;
+  margin-bottom: 10px;
+}
+
+.reading-list-item-title > a {
+  color: #444;
+  text-decoration: none;
+
+  &:hover {
+    color: @link-color;
+  }
+}
+
+.reading-list-item-meta {
+  font-family: @secondary-font-family;
+  font-style: italic;
+  margin-left: 15px;
+}

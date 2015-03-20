@@ -1,8 +1,7 @@
 @import url('base.css.less');
 
 .site-header {
-  background: #444;
-  color: #fff;
+  color: @dark-gray;
   font-weight: bold;
   height: 50px;
   padding: 10px 0;
@@ -11,7 +10,7 @@
   .logo {
 
     a {
-      color: #fff;
+      color: @link-color;
       display: block;
       font: 22px Lora, serif;
       font-style: italic;
@@ -31,10 +30,15 @@
 }
 
 .nav > li {
+  color: #777;
   float: left;
   margin-right: 10px;
   font-family: @secondary-font-family;
   font-weight: normal;
+}
+
+.nav li a:hover {
+  color: @link-color;
 }
 
 .nav > li:last-child {

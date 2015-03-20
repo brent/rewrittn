@@ -311,5 +311,9 @@ describe "User pages" do
     end
 
     it { should have_selector('.pagination') }
+
+    describe "feed toggle" do
+      it { should have_selector('.feed-toggle') }
+    end
   end
 end
