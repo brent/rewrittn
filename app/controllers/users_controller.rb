@@ -9,7 +9,15 @@ class UsersController < ApplicationController
 
   def show
     @user = @target = User.find_by(id: params[:id])
-    @feed_items = PublicActivity::Activity.where(owner_id: @user.id).order("created_at desc").paginate(page: params[:page])
+    if @user == current_user
+      @feed_items = PublicActivity::Activity.where(owner_id: @user.id, anonymous: [true, false, nil])
+                                            .order("created_at desc")
+                                            .paginate(page: params[:page])
+    else
+      @feed_items = PublicActivity::Activity.where(owner_id: @user.id, anonymous: [false, nil])
+                                            .order("created_at desc")
+                                            .paginate(page: params[:page])
+    end
   end
 
   def new

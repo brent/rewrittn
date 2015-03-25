@@ -13,6 +13,13 @@
 
     <%= f.text_area :content_after_snippet, placeholder: "Write something after the snippet" %>
 
+    <div class="anonymous-toggle">
+      <%= f.radio_button :anonymous, true, checked: true %>
+      <%= f.label :anonymous, "written anonymously", value: true %>
+      <%= f.radio_button :anonymous, false %>
+      <%= f.label :anonymous, "written by #{current_user.name}", value: false %>
+    </div>
+
     <%= f.button "publish", class: "btn btn-primary" %>
   <% end %>
 

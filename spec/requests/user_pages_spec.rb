@@ -15,8 +15,11 @@ describe "User pages" do
       s2 = FactoryGirl.create(:snippet, user: user, content: "b" * 51)
       s2.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
 
-      r1 = FactoryGirl.create(:rewrite, user: other_user, snippet: s1)
-      r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title }
+      r1 = FactoryGirl.create(:anon_rewrite, user: other_user, snippet: s1)
+      r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title }, anonymous: true
+
+      r2 = FactoryGirl.create(:rewrite, user: user, snippet: s1)
+      r2.create_activity :create, owner: user, parameters: { snippet_content: s1.content, rewrite_title: r2.title }, anonymous: false
 
       visit user_path(user)
     end
@@ -24,15 +27,28 @@ describe "User pages" do
     it { should have_content(user.name) }
     it { should have_title(user.name) }
 
-    it "should show the user's activity" do
-      PublicActivity::Activity.where(owner_id: user.id).each do |item|
-        expect(page).to have_selector("li#s-#{item.trackable_id}")
+    describe "activity feed" do
+      before do
+        sign_in user
+        visit user_path(other_user)
       end
-    end
 
-    it "should not show activity from other users" do
-      PublicActivity::Activity.where(owner_id: user.id).each do |item|
-        expect(page).to_not have_selector("li#r-#{other_user.rewrites.last.id}")
+      it "should show the user's activity" do
+        PublicActivity::Activity.where(owner_id: other_user.id, anonymous: false).each do |item|
+          expect(page).to have_selector("li#s-#{item.trackable_id}")
+        end
+      end
+
+      it "should not show activity from other users" do
+        PublicActivity::Activity.where(owner_id: other_user.id).each do |item|
+          expect(page).to_not have_selector("li#r-#{user.rewrites.last.id}")
+        end
+      end
+
+      it "should not show anonymous rewrites to other users" do
+        PublicActivity::Activity.where(owner_id: other_user.id) do |item|
+          expect(page).to_not have_selector("li#r-#{other_user.rewrites.last.id}")
+        end
       end
     end
 
@@ -43,7 +59,6 @@ describe "User pages" do
       describe "should not be present on a user's own profile" do
         before { visit user_path(user) }
         it { should_not have_selector("div.star-form") }
-        # expect(page).to_not have_selector("div.star-form")
       end
 
       context "when following a user" do

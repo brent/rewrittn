@@ -17,7 +17,7 @@ class RewritesController < ApplicationController
     @rewrite = current_user.rewrites.build(rewrite_params)
 
     if @rewrite.save
-      @rewrite.create_activity :create, owner: current_user, parameters: { rewrite_title: @rewrite.title, snippet_content: @rewrite.snippet.content, reading_time: reading_time }
+      @rewrite.create_activity :create, owner: current_user, parameters: { rewrite_title: @rewrite.title, snippet_content: @rewrite.snippet.content }, anonymous: @rewrite.anonymous
       redirect_to @rewrite
     else
       flash[:error] = "Your rewrite couldn't be created. Try again?"
@@ -30,6 +30,6 @@ class RewritesController < ApplicationController
 
     def rewrite_params
       params.require(:rewrite).permit(:title, :content_before_snippet,
-                                      :content_after_snippet, :snippet_id)
+                                      :content_after_snippet, :snippet_id, :anonymous)
     end
 end

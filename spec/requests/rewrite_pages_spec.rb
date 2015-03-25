@@ -34,13 +34,17 @@ describe "Rewrite pages" do
   end
 
   describe "show" do
-    let(:rewrite) { FactoryGirl.create(:rewrite, user: user, snippet: snippet) }
+    let(:rewrite) { FactoryGirl.create(:rewrite, user: user, snippet: snippet, anonymous: true) }
     before do
       visit rewrite_path(rewrite)
     end
 
     it "should display the rewrite" do
       expect(page).to have_content(rewrite.content_before_snippet || rewrite.content_after_snippet)
+    end
+
+    it "should not display the author's name if anonymous" do
+      expect(page).to have_selector('.written-by', text: "written anonymously")
     end
 
     describe "star/unstar buttons" do
@@ -72,6 +76,8 @@ describe "Rewrite pages" do
       visit snippet_path(snippet)
       click_link "rewrite"
     end
+
+    it { should have_selector(".anonymous-toggle") }
 
     describe "with invalid information" do
       it "should not create a rewrite" do

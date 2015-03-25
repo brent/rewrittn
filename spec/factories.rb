@@ -16,11 +16,21 @@ FactoryGirl.define do
     user
   end
 
-  factory :rewrite do
+  factory :anon_rewrite, class: Rewrite do
     title "t" * 10
     content_before_snippet ("u" * 101)
     content_after_snippet ("v" * 101)
     user
     snippet
+    anonymous true
+  end
+
+  factory :rewrite do
+    title "w" * 10
+    content_before_snippet ("x" * 101)
+    content_after_snippet ("y" * 101)
+    user
+    snippet
+    anonymous false
   end
 end

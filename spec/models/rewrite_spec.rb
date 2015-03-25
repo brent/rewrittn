@@ -13,6 +13,7 @@ describe Rewrite do
   it { should respond_to(:user_id) }
   it { should respond_to(:snippet_id) }
   it { should respond_to(:title) }
+  it { should respond_to(:anonymous) }
 
   describe "when the user_id is not present" do
     before { rewrite.user_id = nil }
