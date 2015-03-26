@@ -40,6 +40,12 @@
 
     </div>
 
+    <ul class="tag-list">
+      <% @rewrite.tags.each do |tag| %>
+        <li class="tag-list-tag"><%= tag %></li>
+      <% end %>
+    </ul>
+
   </div>
 
 <% end %>

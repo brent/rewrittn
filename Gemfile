@@ -13,6 +13,7 @@ gem 'less-rails', '~> 2.4.2'
 gem 'therubyracer', '~> 0.12.1'
 gem 'will_paginate', '~> 3.0.4'
 gem 'public_activity','~> 1.4.1'
+gem 'acts-as-taggable-on', '~> 3.4'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'

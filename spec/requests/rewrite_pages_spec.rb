@@ -78,6 +78,7 @@ describe "Rewrite pages" do
     end
 
     it { should have_selector(".anonymous-toggle") }
+    it { should have_selector(".add-tags") }
 
     describe "with invalid information" do
       it "should not create a rewrite" do

@@ -1,4 +1,6 @@
 module RewritesHelper
+  include ActsAsTaggableOn::TagsHelper
+
   def parse_source_url(url)
     url = "http://#{url}" if URI.parse(url).scheme.nil?
     host = URI.parse(url).host.downcase

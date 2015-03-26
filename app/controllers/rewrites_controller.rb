@@ -29,7 +29,11 @@ class RewritesController < ApplicationController
   private
 
     def rewrite_params
-      params.require(:rewrite).permit(:title, :content_before_snippet,
-                                      :content_after_snippet, :snippet_id, :anonymous)
+      params.require(:rewrite).permit(:title,
+                                      :content_before_snippet,
+                                      :content_after_snippet,
+                                      :snippet_id,
+                                      :anonymous,
+                                      :tag_list)
     end
 end
