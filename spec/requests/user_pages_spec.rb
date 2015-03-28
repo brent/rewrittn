@@ -9,6 +9,8 @@ describe "User pages" do
     let(:other_user) { FactoryGirl.create(:user) }
 
     before do
+      # TODO Fix this mess
+      #
       s1 = FactoryGirl.create(:snippet, user: user, content: "a" * 51)
       s1.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
 
@@ -16,10 +18,10 @@ describe "User pages" do
       s2.create_activity :create, owner: user, parameters: { snippet_content: s1.content }
 
       r1 = FactoryGirl.create(:anon_rewrite, user: other_user, snippet: s1)
-      r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title }, anonymous: true
+      r1.create_activity :create, owner: other_user, parameters: { snippet_content: s1.content, rewrite_title: r1.title, tags: r1.tag_list }, anonymous: true
 
       r2 = FactoryGirl.create(:rewrite, user: user, snippet: s1)
-      r2.create_activity :create, owner: user, parameters: { snippet_content: s1.content, rewrite_title: r2.title }, anonymous: false
+      r2.create_activity :create, owner: user, parameters: { snippet_content: s1.content, rewrite_title: r2.title, tags: r2.tag_list }, anonymous: false
 
       visit user_path(user)
     end
@@ -48,6 +50,12 @@ describe "User pages" do
       it "should not show anonymous rewrites to other users" do
         PublicActivity::Activity.where(owner_id: other_user.id) do |item|
           expect(page).to_not have_selector("li#r-#{other_user.rewrites.last.id}")
+        end
+      end
+
+      it "should display tags for rewrites" do
+        PublicActivity::Activity.where(owner_id: other_user.id) do |item|
+          expect(page).to have_selector(".feed-item-rewrite-tags-tag")
         end
       end
     end
@@ -329,6 +337,10 @@ describe "User pages" do
 
     describe "feed toggle" do
       it { should have_selector('.feed-toggle') }
+    end
+
+    describe "rewrites should have tags" do
+      it { should have_selector(".reading-list-item-tags-tag") }
     end
   end
 end

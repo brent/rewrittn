@@ -32,5 +32,9 @@ FactoryGirl.define do
     user
     snippet
     anonymous false
+
+    after(:build) do |rewrite|
+      rewrite.tag_list.add(%w(sci-fi horror comedy drama first-person third-person horror poetry lyrics prose limerick sonnet fiction non-fiction action mystery thriller political romance))
+    end
   end
 end

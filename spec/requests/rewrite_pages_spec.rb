@@ -39,6 +39,10 @@ describe "Rewrite pages" do
       visit rewrite_path(rewrite)
     end
 
+    it "should display the rewrite's tags" do
+      expect(page).to have_selector(".tag-list-tag", text: "sci-fi")
+    end
+
     it "should display the rewrite" do
       expect(page).to have_content(rewrite.content_before_snippet || rewrite.content_after_snippet)
     end

@@ -1,13 +1,21 @@
-<li class="feed-item feed-rewrite-create" id=<%= "#{activity.trackable_type[0].downcase}-#{activity.trackable_id}" %>>
+<li class="feed-item feed-item-rewrite--create" id=<%= "#{activity.trackable_type[0].downcase}-#{activity.trackable_id}" %>>
 
   <small class="timestamp"><%= time_ago_in_words(activity.created_at) %> ago</small>
   <p><%= link_to User.find(activity.owner_id).name, User.find(activity.owner_id), class: "username" %> created a rewrite</p>
 
-  <h3 class="rewrite-title"><%= link_to activity.parameters[:rewrite_title], rewrite_path(activity.trackable_id) %></h3>
+  <h3 class="feed-item-rewrite-title"><%= link_to activity.parameters[:rewrite_title], rewrite_path(activity.trackable_id) %></h3>
 
-  <div class="snippet-container">
-    <p class="seeded-by">seeded by:</p>
-    <div class="snippet">
+  <% if !activity.parameters[:tags].nil? %>
+    <ul class="feed-item-rewrite-tags clearfix">
+      <% activity.parameters[:tags].each do |tag| %>
+        <li class="feed-item-rewrite-tags-tag"><%= tag %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="feed-item-rewrite-snippet-container">
+    <p class="feed-item-rewrite-snippet-seeded-by">seeded by:</p>
+    <div class="feed-item-rewrite-snippet-content">
       <a href="<%= snippet_path(activity.trackable_id) %>">
         <%= simple_format activity.parameters[:snippet_content] %>
       </a>
