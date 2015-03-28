@@ -1,4 +1,7 @@
 module RewritesHelper
+  include ActsAsTaggableOn::TagsHelper
+  # TODO not sure if above is necessary
+
   def parse_source_url(url)
     url = "http://#{url}" if URI.parse(url).scheme.nil?
     host = URI.parse(url).host.downcase
@@ -19,6 +22,20 @@ module RewritesHelper
       else
         link_to "by #{rewrite.user.name}", rewrite.user
       end
+    end
+  end
+
+  def reading_time(rewrite)
+    content = ""
+    content << rewrite.content_before_snippet if rewrite.content_before_snippet?
+    content << rewrite.snippet.content
+    content << rewrite.content_after_snippet if rewrite.content_after_snippet?
+
+    read_time = content.split.count / 300
+    if read_time < 1
+      "less than a minute"
+    else
+      "#{read_time.round} min"
     end
   end
 end

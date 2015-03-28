@@ -38,37 +38,36 @@ end
 
 def make_rewrites
   users = User.all(limit: 6)
+  tags = %w(sci-fi horror comedy drama first-person third-person horror
+            poetry lyrics prose limerick sonnet fiction non-fiction
+            action mystery thriller political romance)
   30.times do |n|
     users.each do |user|
       if (n + 1) % 2 == 0
-        r = user.rewrites.create!(title: Faker::Lorem.sentence(10),
+        r = user.rewrites.new(title: Faker::Lorem.sentence(10),
                               content_before_snippet: Faker::Lorem.sentence(40),
                               snippet: Snippet.find(n+1),
                               anonymous: true)
-
-        r.create_activity :create, owner: user, parameters: { rewrite_title: r.title,
-                                                              snippet_content: r.snippet.content },
-                                                              anonymous: r.anonymous
       elsif (n + 1) % 3 == 0
-        r = user.rewrites.create!(title: Faker::Lorem.sentence(10),
+        r = user.rewrites.new(title: Faker::Lorem.sentence(10),
                               content_after_snippet: Faker::Lorem.sentence(40),
                               snippet: Snippet.find(n+1),
                               anonymous: true)
-
-        r.create_activity :create, owner: user, parameters: { rewrite_title: r.title,
-                                                              snippet_content: r.snippet.content },
-                                                              anonymous: r.anonymous
       else
-        r = user.rewrites.create!(title: Faker::Lorem.sentence(10),
+        r = user.rewrites.new(title: Faker::Lorem.sentence(10),
                               content_before_snippet: Faker::Lorem.sentence(20),
                               content_after_snippet: Faker::Lorem.sentence(20),
                               snippet: Snippet.find(n+1),
                               anonymous: false)
-
-        r.create_activity :create, owner: user, parameters: { rewrite_title: r.title,
-                                                              snippet_content: r.snippet.content },
-                                                              anonymous: r.anonymous
       end
+      Random.rand(tags.count).times do
+        r.tag_list.add(tags[Random.rand(tags.count)-1])
+      end
+      r.save
+      r.create_activity :create, owner: user, parameters: { rewrite_title: r.title,
+                                                            snippet_content: r.snippet.content,
+                                                            tags: r.tag_list },
+                                                            anonymous: r.anonymous
     end
   end
 end

@@ -1,4 +1,6 @@
 class Rewrite < ActiveRecord::Base
+  acts_as_taggable
+
   include PublicActivity::Common
 
   belongs_to :user

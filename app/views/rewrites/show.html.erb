@@ -6,15 +6,34 @@
   <div class="rewrite-single">
 
     <div class="rewrite-meta container">
-      <div class="rewrite-title-container">
-        <h2 class="rewrite-title" id="rewrite-title"><%= @rewrite.title %></h2>
-      </div>
 
-      <h3 class="user-meta"><small class="timestamp">added <%= time_ago_in_words(@rewrite.created_at) %> ago</small> | <small class="read-time">1 min read</small> | <small class="written-by">written <% if @rewrite.anonymous? %>anonymously<% else %>by <%= link_to @rewrite.user.name, @rewrite.user %><% end%></h3>
       <div class="rewrite-star-count">
         <%= render 'shared/star_form' if signed_in? %>
       </div>
 
+      <div class="rewrite-title-container">
+        <h2 class="rewrite-title" id="rewrite-title"><%= @rewrite.title %></h2>
+      </div>
+
+      <% if @rewrite.tags.count > 0 %>
+        <ul class="rewrite-single-tag-list clearfix">
+          <% @rewrite.tags.each do |tag| %>
+            <li class="rewrite-single-tag-list-tag"><%= tag %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <h3 class="user-meta">
+        <small class="timestamp">added <%= time_ago_in_words(@rewrite.created_at) %> ago</small>
+        | <small class="read-time"><%= reading_time(@rewrite) %> read</small>
+      | <small class="written-by">written
+          <% if @rewrite.anonymous? %>
+            anonymously
+          <% else %>
+            by <%= link_to @rewrite.user.name, @rewrite.user %>
+          <% end%>
+        </small>
+      </h3>
     </div>
 
     <div class="rewrite-content container">
@@ -37,9 +56,7 @@
           <%= simple_format @rewrite.content_after_snippet %>
         </div>
       <% end %>
-
     </div>
-
   </div>
 
 <% end %>
