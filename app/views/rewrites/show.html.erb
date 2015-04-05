@@ -18,7 +18,7 @@
       <% if @rewrite.tags.count > 0 %>
         <ul class="rewrite-single-tag-list clearfix">
           <% @rewrite.tags.each do |tag| %>
-            <li class="rewrite-single-tag-list-tag"><%= tag %></li>
+            <li class="rewrite-single-tag-list-tag"><a href="<%= tags_path(tag.name) %>"><%= tag %></a></li>
           <% end %>
         </ul>
       <% end %>

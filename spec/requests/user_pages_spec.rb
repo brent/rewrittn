@@ -55,7 +55,7 @@ describe "User pages" do
 
       it "should display tags for rewrites" do
         PublicActivity::Activity.where(owner_id: other_user.id) do |item|
-          expect(page).to have_selector(".feed-item-rewrite-tags-tag")
+          expect(page).to have_selector(".feed-item-rewrite-tags-tag a", text: "sci-fi", href: tags_path("sci-fi"))
         end
       end
     end

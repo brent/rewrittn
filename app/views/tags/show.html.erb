@@ -1,0 +1,14 @@
+<ul>
+<% @rewrites.each do |rewrite| %>
+  <li>
+    <h2><%= rewrite.title %></h2>
+    <ul>
+      <% rewrite.tag_list.each do |tag| %>
+        <li><%= tag %></li>
+      <% end %>
+    </ul>
+  </li>
+<% end %>
+</ul>
+
+<%= will_paginate @rewrites %>

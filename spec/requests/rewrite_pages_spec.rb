@@ -40,7 +40,7 @@ describe "Rewrite pages" do
     end
 
     it "should display the rewrite's tags" do
-      expect(page).to have_selector(".tag-list-tag", text: "sci-fi")
+      expect(page).to have_selector(".rewrite-single-tag-list-tag", text: "sci-fi")
     end
 
     it "should display the rewrite" do

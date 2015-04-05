@@ -79,6 +79,7 @@ class UsersController < ApplicationController
 
   def reading_list
     @reading_list_items = Rewrite.reading_list.paginate(page:params[:page])
+    render 'shared/reading_list'
   end
 
   private

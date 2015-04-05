@@ -4,7 +4,7 @@
   <% if rewrite.tag_list.count > 0 %>
     <ul class="reading-list-item-tags clearfix">
       <% rewrite.tag_list.each do |tag| %>
-        <li class="reading-list-item-tags-tag"><%= tag %></li>
+        <li class="reading-list-item-tags-tag"><a href="<%= tags_path(tag) %>"><%= tag %></a></li>
       <% end %>
     </ul>
   <% end %>

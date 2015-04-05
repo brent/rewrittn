@@ -4,7 +4,7 @@
 
   <ol class="reading-list">
     <% @reading_list_items.each do |rewrite| %>
-      <%= render partial: "reading_list_item", locals: { rewrite: rewrite } %>
+      <%= render partial: "shared/reading_list_item", locals: { rewrite: rewrite } %>
     <% end %>
   </ol>
 
